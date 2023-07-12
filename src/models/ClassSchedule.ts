@@ -1,0 +1,16 @@
+import mongoose from "mongoose";
+
+// (){} : ! # _ => ""
+const ClassScheduleSchema = new mongoose.Schema({
+  title: { type: String, required: true, trim: true, max: 100 },
+  description: { type: String, required: true, trim: true, max: 500, default: 'This is the description',},
+  time: { type: Date, required: true },
+  startTime: { type: Date, required: true },
+  endTime: { type: Date, required: true },
+  classModuleId: { type: mongoose.Types.ObjectId, ref: 'ClassModule', required: true, max: 50 },
+
+}, { timestamps: true });
+
+const ClassScheduleModel = mongoose.model('ClassSchedule', ClassScheduleSchema);
+
+export default ClassScheduleModel;
