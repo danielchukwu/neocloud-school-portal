@@ -13,7 +13,7 @@ import UsersClasses from "../../models/UsersClasses";
 import UsersFaculties from "../../models/UsersFaculties";
 import UsersRoles from "../../models/UsersRoles";
 
-const resolverMutations = {
+const mutationResolvers = {
   Mutation: {
     // # Attendance
     createAttendance: async (_: any, args: { attendance: {} }) => {
@@ -205,4 +205,4 @@ const resolverMutations = {
   }
 };
 
-export default resolverMutations;
+export default mutationResolvers;
