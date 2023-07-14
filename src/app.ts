@@ -13,35 +13,32 @@ const port = process.env.PORT || 8000;
 
 // (){} : ! # _ => ""
 const bootstrapApp = async () => {
-  // start server
+  // Create apollo server
   const server = new ApolloServer({
     typeDefs,
     resolvers,
   });
   await server.start();
 
-  // middleware's
+  // middleware
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use("/graphql", expressMiddleware(server));
 
-  // start express server
-  // console.log(process.env.DBURI);
-  // mongoose
-  // .connect(process.env.DBURI || '/')
-  // .then(() => {
-  //   app.listen(port, () => {
-  //     console.log(`🚀 Express Server ready at http://localhost:${port}`);
-  //     console.log(`🚀 Graphql Server ready at http://localhost:${port}/graphql`);
-  //   });
-  // })
-  // .catch((err) => { throw new Error(`Failed to connect to Database`,); });
-
-  app.listen(port, () => {
-    console.log(`🚀 Express Server ready at http://localhost:${port}`);
-    console.log(`🚀 Graphql Server ready at http://localhost:${port}/graphql`);
-  });
+  // listen
+  const dbURI = process.env.DBURI || "";
+  mongoose
+    .connect(dbURI)
+    .then(() => {
+      app.listen(port, () => {
+        console.log(`🚀 Express Server ready at http://localhost:${port}`);
+        console.log(
+          `🚀 Graphql Server ready at http://localhost:${port}/graphql`
+        );
+      });
+    })
+    .catch((err) => console.log(err));
 
   // routes
   app.get("/", (req, res) => {
