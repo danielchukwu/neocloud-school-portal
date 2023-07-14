@@ -13,7 +13,7 @@ import UsersClasses from "../models/UsersClasses";
 import UsersFaculties from "../models/UsersFaculties";
 import UsersRoles from "../models/UsersRoles";
 import nestedQueryResolvers from "./resolvers/nestedResolvers";
-import resolverMutations from "./resolvers/mutationResolver";
+import mutationResolvers from "./resolvers/mutationResolver";
 import mutationType from "./typeDefs/mutationType";
 
 export const typeDefs = `#graphql
@@ -226,5 +226,5 @@ export const resolvers = {
   
   ...nestedQueryResolvers,
 
-  ...resolverMutations,
+  ...mutationResolvers,
 };
