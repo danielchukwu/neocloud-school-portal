@@ -128,46 +128,46 @@ export const typeDefs = `#graphql
   # RootQuery
   type Query {
     # Attendance
-    attendances: [Attendance]!
+    attendances(limit: Int): [Attendance]!
     attendance(_id: ID!): Attendance
     # Class
-    classes: [Class]!
+    classes(limit: Int): [Class]!
     class(_id: ID!): Class
     # ClassInstance
-    classInstances: [ClassInstance]!
+    classInstances(limit: Int): [ClassInstance]!
     classInstance(_id: ID!): ClassInstance
     # ClassModule
-    classModules: [ClassModule]!
+    classModules(limit: Int): [ClassModule]!
     classModule(_id: ID!): ClassModule
     # ClassSchedule
-    classSchedules: [ClassSchedule]!
+    classSchedules(limit: Int): [ClassSchedule]!
     classSchedule(_id: ID!): ClassSchedule
     # Classwork's
-    classworks: [Classwork]!
+    classworks(limit: Int): [Classwork]!
     classwork(_id: ID!): Classwork
     # Faculty
-    faculties: [Faculty]!
+    faculties(limit: Int): [Faculty]!
     faculty(_id: ID!): Faculty
     # Notification
-    notifications: [Notification]!
+    notifications(limit: Int): [Notification]!
     notification(_id: ID!): Notification
     # NotificationType
-    notificationTypes: [NotificationType]!
+    notificationTypes(limit: Int): [NotificationType]!
     notificationType(_id: ID!): NotificationType
     # Role
-    roles: [Role]!
+    roles(limit: Int): [Role]!
     role(_id: ID!): Role
     # User
-    users: [User]!
+    users(limit: Int): [User]!
     user(_id: ID!): User
     # UsersClasses
-    usersClasses: [UsersClasses]!
+    usersClasses(limit: Int): [UsersClasses]!
     userClass(_id: ID!): UsersClasses
     # UsersFaculties
-    usersFaculties: [UsersFaculties]!
+    usersFaculties(limit: Int): [UsersFaculties]!
     userFaculty(_id: ID!): UsersFaculties
     # UsersRoles
-    usersRoles: [UsersRoles]!
+    usersRoles(limit: Int): [UsersRoles]!
     userRole(_id: ID!): UsersRoles
   }
 
@@ -180,47 +180,48 @@ export const typeDefs = `#graphql
 export const resolvers = {
   Query: {
     // Attendance
-    attendances: async () => await Attendance.find({}),
+    attendances: async (_: any, args: {limit: number}) => await Attendance.find({}).limit(args.limit ?? 100),
     attendance: async (_: any
       , args: { _id: String }) => await Attendance.findById(args._id),
     // Class
-    classes: async () => await Class.find({}),
+    classes: async (_: any, args: {limit: number}) => await Class.find({}).limit(args.limit ?? 100),
     class: async (_: any, args: { _id: String }) => await Class.findById(args._id),
     // ClassInstance
-    classInstances: async () => await ClassInstance.find({}),
+    classInstances: async (_: any, args: {limit: number}) => await ClassInstance.find({}).limit(args.limit ?? 100),
     classInstance: async (_: any, args: { _id: String }) => await ClassInstance.findById(args._id),
     // ClassModule
-    classModules: async () => await ClassModule.find({}),
+    classModules: async (_: any, args: {limit: number}) => await ClassModule.find({}).limit(args.limit ?? 100),
     classModule: async (_: any, args: { _id: String }) => await ClassModule.findById(args._id),
     // ClassSchedule
-    classSchedules: async () => await ClassSchedule.find({}),
+    classSchedules: async (_: any, args: {limit: number}) => await ClassSchedule.find({}).limit(args.limit ?? 100),
     classSchedule: async (_: any, args: { _id: String }) => await ClassSchedule.findById(args._id),
     // Classwork
-    classworks: async () => await Classwork.find({}),
+    classworks: async (_: any, args: {limit: number}) => await Classwork.find({}).limit(args.limit ?? 100),
     classwork: async (_: any, args: { _id: String }) => await Classwork.findById(args._id),
     // Faculty
-    faculties: async () => await Faculty.find({}),
+    faculties: async (_: any, args: {limit: number}) => await Faculty.find({}).limit(args.limit ?? 100),
+
     faculty: async (_: any, args: { _id: String }) => await Faculty.findById(args._id),
     // Notification
-    notifications: async () => await Notification.find({}),
+    notifications: async (_: any, args: {limit: number}) => await Notification.find({}).limit(args.limit ?? 100),
     notification: async (_: any, args: { _id: String }) => await Notification.findById(args._id),
     // NotificationType
-    notificationTypes: async () => await NotificationType.find({}),
+    notificationTypes: async (_: any, args: {limit: number}) => await NotificationType.find({}).limit(args.limit ?? 100),
     notificationType: async (_: any, args: { _id: String }) => await NotificationType.findById(args._id),
     // Role
-    roles: async () => await Role.find({}),
+    roles: async (_: any, args: {limit: number}) => await Role.find({}).limit(args.limit ?? 100),
     role: async (_: any, args: { _id: String }) => await Role.findById(args._id),
     // User
-    users: async () => await User.find({}),
+    users: async (_: any, args: {limit: number}) => await User.find({}).limit(args.limit ?? 100),
     user: async (_: any, args: { _id: String }) => await User.findById(args._id),
     // UsersClasses
-    usersClasses: async () => await UsersClasses.find({}),
+    usersClasses: async (_: any, args: {limit: number}) => await UsersClasses.find({}).limit(args.limit ?? 100),
     userClass: async (_: any, args: { _id: String }) => await UsersClasses.findById(args._id),
     // UsersFaculties
-    usersFaculties: async () => await UsersFaculties.find({}),
+    usersFaculties: async (_: any, args: {limit: number}) => await UsersFaculties.find({}).limit(args.limit ?? 100),
     userFaculty: async (_: any, args: { _id: String }) => await UsersFaculties.findById(args._id),
     // UsersRoles
-    usersRoles: async () => await UsersRoles.find({}),
+    usersRoles: async (_: any, args: {limit: number}) => await UsersRoles.find({}).limit(args.limit ?? 100),
     userRole: async (_: any, args: { _id: String }) => await UsersRoles.findById(args._id),
   },
   
