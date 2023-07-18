@@ -87,6 +87,7 @@ exports.typeDefs = `#graphql
   type Faculty {
     _id: ID!
     name: String!
+    about: String!
     hodId: ID!
     hod: User!
   }

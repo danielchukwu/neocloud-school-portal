@@ -26,8 +26,8 @@ const mutationInputs = `#graphql
   input updateClassworkInput { title: String, body: String, deadline: String }
   
   # Faculty
-  input createFacultyInput { name: String!, hodId: ID! }
-  input updateFacultyInput { name: String, hodId: ID }
+  input createFacultyInput { name: String!, about: String!, hodId: ID! }
+  input updateFacultyInput { name: String,about: String, hodId: ID }
   
   # Notification
   input createNotificationInput { body: String, notificationTypeId: ID!, classworkId: ID }
