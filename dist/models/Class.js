@@ -1,0 +1,14 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+// (){} : ! # _ => ""
+const ClassSchema = new mongoose_1.default.Schema({
+    title: { type: String, required: true, trim: true, max: 100 },
+    description: { type: String, required: true, trim: true, max: 500, default: 'This is the description', },
+    facultyId: { type: mongoose_1.default.Types.ObjectId, ref: 'Faculty', required: true, trim: true, max: 50 },
+}, { timestamps: true });
+const ClassModel = mongoose_1.default.model('Class', ClassSchema);
+exports.default = ClassModel;
