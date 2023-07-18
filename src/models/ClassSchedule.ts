@@ -10,7 +10,7 @@ const ClassScheduleSchema = new mongoose.Schema({
   endTime: { type: Date, required: true },
   classModuleId: { type: mongoose.Types.ObjectId, ref: 'ClassModule', required: true, max: 50 },
 
-}, { timestamps: true });
+});
 
 const ClassScheduleModel = mongoose.model('ClassSchedule', ClassScheduleSchema);
 

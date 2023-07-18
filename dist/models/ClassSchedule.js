@@ -13,6 +13,6 @@ const ClassScheduleSchema = new mongoose_1.default.Schema({
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
     classModuleId: { type: mongoose_1.default.Types.ObjectId, ref: 'ClassModule', required: true, max: 50 },
-}, { timestamps: true });
+});
 const ClassScheduleModel = mongoose_1.default.model('ClassSchedule', ClassScheduleSchema);
 exports.default = ClassScheduleModel;
