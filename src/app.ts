@@ -21,6 +21,7 @@ const bootstrapApp = async () => {
   await server.start();
 
   // middleware
+  // server.applyMiddleware({ app });
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
