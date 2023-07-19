@@ -54,3 +54,17 @@ const bootstrapApp = () => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 bootstrapApp();
+// User 🚀
+// Faculty 🚀
+// Classes 🚀
+// Attendance 
+// ClassInstance 🚀
+// ClassModule 🚀
+// ClassSchedule 
+// Classwork 
+// Notifications 
+// NotificationType 
+// Role 
+// UsersClasses 
+// UsersFaculties 
+// UsersRoles 

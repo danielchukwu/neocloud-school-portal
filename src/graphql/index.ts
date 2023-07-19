@@ -106,7 +106,9 @@ export const typeDefs = `#graphql
     bio: String!
     phone: String
     password: String!
-    faculty: Faculty!
+    faculty: [UsersFaculties]!
+    roleId: ID!
+    role: Role!
   }
   type UsersClasses {
     _id: ID!

@@ -47,3 +47,19 @@ const bootstrapApp = async () => {
   });
 };
 bootstrapApp();
+
+
+// User 🚀
+// Faculty 🚀
+// Classes 🚀
+// Attendance 
+// ClassInstance 🚀
+// ClassModule 🚀
+// ClassSchedule 
+// Classwork 
+// Notifications 
+// NotificationType 
+// Role 
+// UsersClasses 
+// UsersFaculties 
+// UsersRoles 

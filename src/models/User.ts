@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
   phone: { type: String, required: false, trim: true, max: 25, min: 11 },
   password: { type: String, required: true, trim: true, max: 50, min: 6 },
   rating: { type: Number, required: true, max: 100, min: 0, default: 0},
+  roleId: { type: mongoose.Types.ObjectId, ref: 'Role', max: 50 },
 }, { timestamps: true });
 
 const UserModel = mongoose.model('User', UserSchema);

@@ -41,8 +41,8 @@ const mutationInputs = `#graphql
   input updateRoleInput { name: String }
   
   # User
-  input createUserInput { name: String!, email: String!, avatar: String, cover: String, bio: String!, phone: String, password: String! }
-  input updateUserInput { name: String, email: String, avatar: String, cover: String, bio: String, phone: String }
+  input createUserInput { name: String!, email: String!, avatar: String, cover: String, bio: String!, phone: String, password: String! roleId: String! }
+  input updateUserInput { name: String, email: String, avatar: String, cover: String, bio: String, phone: String roleId: String }
   
   # UsersClasses
   input createUsersClassesInput { userId: ID!, classId: ID! }
