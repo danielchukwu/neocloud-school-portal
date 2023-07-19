@@ -48,12 +48,12 @@ const mutationType = `#graphql
     updateUser(_id: ID!, user: updateUserInput): User!
     deleteUser(_id: ID!): [User]!
     # UsersClassesRoles
-    createUsersClassesRoles(userClass: createUsersClassesRolesInput!): UsersClassesRoles!
-    updateUsersClassesRoles(_id: ID!, userClass: updateUsersClassesRolesInput): UsersClassesRoles!
+    createUsersClassesRoles(usersClassesRoles: createUsersClassesRolesInput!): UsersClassesRoles!
+    updateUsersClassesRoles(_id: ID!, usersClassesRoles: updateUsersClassesRolesInput): UsersClassesRoles!
     deleteUsersClassesRoles(_id: ID!): [UsersClassesRoles]!
     # UsersFaculties
-    createUsersFacultiesRoles(userClass: createUsersFacultiesRolesInput!): UsersFacultiesRoles!
-    updateUsersFacultiesRoles(_id: ID!, userClass: updateUsersFacultiesRolesInput): UsersFacultiesRoles!
+    createUsersFacultiesRoles(usersFacultiesRoles: createUsersFacultiesRolesInput!): UsersFacultiesRoles!
+    updateUsersFacultiesRoles(_id: ID!, usersFacultiesRoles: updateUsersFacultiesRolesInput): UsersFacultiesRoles!
     deleteUsersFacultiesRoles(_id: ID!): [UsersFacultiesRoles]!
     # UsersRoles
     createUsersRoles(userRole: createUsersRolesInput!): UsersRoles!
