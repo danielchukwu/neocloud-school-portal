@@ -47,7 +47,7 @@ exports.typeDefs = `#graphql
     avatar: String
     about: String!
     facultyId: ID!
-    # 
+    # below fields are not on model
     faculty: Faculty!
     educators: [User!]!
   }

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Class from "../../models/Class";
 import ClassModule from "../../models/ClassModule";
 import ClassSchedule from "../../models/ClassSchedule";
@@ -6,6 +7,7 @@ import Faculty from "../../models/Faculty";
 import NotificationType from "../../models/NotificationType";
 import Role from "../../models/Role";
 import User from "../../models/User";
+import UsersClassesRoles from "../../models/UsersClassesRoles";
 import UsersFacultiesRoles from "../../models/UsersFacultiesRoles";
 
 const nestedResolvers = {
@@ -16,10 +18,18 @@ const nestedResolvers = {
   },
   Class: {
     faculty: async (parent: any) => await Faculty.findById(parent.facultyId),
-    // educators: async (parent: any) => {
-    //   const role = await Role.find({name: 'Educator'});
-    //   return await User.find({roleId: role[0]._id, facultyId: parent._id});
-    // },
+    educators: async (parent: any) => {
+      const role = await Role.findOne({name: 'Educator'});
+      const usersClassRolesList = await UsersClassesRoles.find({roleId: role?._id, classId: parent._id});
+
+      const educators: any[] = [];
+
+      await Promise.all(usersClassRolesList.map(async(item) => {
+        educators.push(await User.findById(item.userId));
+      }));
+
+      return educators;
+    },
   },
   ClassInstance: {
     class: async (parent: any) => await Class.findById(parent.classId),
@@ -39,12 +49,16 @@ const nestedResolvers = {
     hod: async (parent: any) => await User.findById(parent.hodId),
     classes: async (parent: any) => await Class.find({facultyId: parent._id}),
     educators: async (parent: any) => {
-      const role = await Role.find({name: 'Educator'});
-      const roleId = role[0]._id;
+      const role = await Role.findOne({name: 'Educator'});
+      const usersFacultiesRolesList = await UsersFacultiesRoles.find({roleId: role?._id, facultyId: parent._id});
 
-      const users = User.find({roleId: role[0]._id});
+      const educators: any[] = [];
 
-      return await User.find({roleId: role[0]._id, facultyId: parent._id});
+      await Promise.all(usersFacultiesRolesList.map(async(item) => {
+        educators.push(await User.findById(item.userId));
+      }));
+
+      return educators;
     },
     students: async (parent: any) => {
       const role = await Role.find({name: 'Student'});
