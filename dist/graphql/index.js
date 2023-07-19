@@ -66,9 +66,9 @@ exports.typeDefs = `#graphql
     order: Int!
     title: String!
     description: String!
-    date: String,!
-    startTime: String!
-    endTime: String!
+    date: String!
+    startTime: String
+    endTime: String
     classModuleId: ID!
     classModule: ClassModule!
   }
