@@ -23,8 +23,8 @@ const Notification_1 = __importDefault(require("../../models/Notification"));
 const NotificationType_1 = __importDefault(require("../../models/NotificationType"));
 const Role_1 = __importDefault(require("../../models/Role"));
 const User_1 = __importDefault(require("../../models/User"));
-const UsersClasses_1 = __importDefault(require("../../models/UsersClasses"));
-const UsersFaculties_1 = __importDefault(require("../../models/UsersFaculties"));
+const UsersClassesRoles_1 = __importDefault(require("../../models/UsersClassesRoles"));
+const UsersFacultiesRoles_1 = __importDefault(require("../../models/UsersFacultiesRoles"));
 const UsersRoles_1 = __importDefault(require("../../models/UsersRoles"));
 const mutationResolvers = {
     Mutation: {
@@ -164,30 +164,30 @@ const mutationResolvers = {
             return yield User_1.default.find({});
         }),
         // UsersClasses
-        createUsersClasses: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
-            const usersClasses = new UsersClasses_1.default(args.usersClasses);
-            return usersClasses.save();
+        createUsersClassesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            const usersClassesRoles = new UsersClassesRoles_1.default(args.usersClassesRoles);
+            return usersClassesRoles.save();
         }),
-        updateUsersClasses: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
-            const usersClasses = yield UsersClasses_1.default.findByIdAndUpdate(args._id, args.usersClasses);
-            return yield (usersClasses === null || usersClasses === void 0 ? void 0 : usersClasses.save());
+        updateUsersClassesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            const usersClassesRoles = yield UsersClassesRoles_1.default.findByIdAndUpdate(args._id, args.usersClassesRoles);
+            return yield (usersClassesRoles === null || usersClassesRoles === void 0 ? void 0 : usersClassesRoles.save());
         }),
-        deleteUsersClasses: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
-            yield UsersClasses_1.default.findByIdAndDelete(args._id);
-            return yield UsersClasses_1.default.find({});
+        deleteUsersClassesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            yield UsersClassesRoles_1.default.findByIdAndDelete(args._id);
+            return yield UsersClassesRoles_1.default.find({});
         }),
         // UsersFaculties
-        createUsersFaculties: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
-            const usersFaculties = new UsersFaculties_1.default(args.usersFaculties);
-            return usersFaculties.save();
+        createUsersFacultiesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            const usersFacultiesRoles = new UsersFacultiesRoles_1.default(args.usersFacultiesRoles);
+            return usersFacultiesRoles.save();
         }),
-        updateUsersFaculties: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
-            const usersFaculties = yield UsersFaculties_1.default.findByIdAndUpdate(args._id, args.usersFaculties);
-            return yield (usersFaculties === null || usersFaculties === void 0 ? void 0 : usersFaculties.save());
+        updateUsersFacultiesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            const usersFacultiesRoles = yield UsersFacultiesRoles_1.default.findByIdAndUpdate(args._id, args.usersFacultiesRoles);
+            return yield (usersFacultiesRoles === null || usersFacultiesRoles === void 0 ? void 0 : usersFacultiesRoles.save());
         }),
-        deleteUsersFaculties: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
-            yield UsersFaculties_1.default.findByIdAndDelete(args._id);
-            return yield UsersFaculties_1.default.find({});
+        deleteUsersFacultiesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            yield UsersFacultiesRoles_1.default.findByIdAndDelete(args._id);
+            return yield UsersFacultiesRoles_1.default.find({});
         }),
         // UsersRoles
         createUsersRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () {

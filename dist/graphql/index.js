@@ -24,8 +24,8 @@ const Notification_1 = __importDefault(require("../models/Notification"));
 const NotificationType_1 = __importDefault(require("../models/NotificationType"));
 const Role_1 = __importDefault(require("../models/Role"));
 const User_1 = __importDefault(require("../models/User"));
-const UsersClasses_1 = __importDefault(require("../models/UsersClasses"));
-const UsersFaculties_1 = __importDefault(require("../models/UsersFaculties"));
+const UsersClassesRoles_1 = __importDefault(require("../models/UsersClassesRoles"));
+const UsersFacultiesRoles_1 = __importDefault(require("../models/UsersFacultiesRoles"));
 const UsersRoles_1 = __importDefault(require("../models/UsersRoles"));
 const nestedResolvers_1 = __importDefault(require("./resolvers/nestedResolvers"));
 const mutationResolver_1 = __importDefault(require("./resolvers/mutationResolver"));
@@ -44,9 +44,12 @@ exports.typeDefs = `#graphql
   type Class {
     _id: ID!
     name: String!
+    avatar: String
     about: String!
     facultyId: ID!
+    # 
     faculty: Faculty!
+    educators: [User!]!
   }
   type ClassInstance {
     _id: ID!
@@ -89,7 +92,7 @@ exports.typeDefs = `#graphql
     name: String!
     about: String!
     hodId: ID!
-    # Not default field values below
+    # Not Model field values below
     hod: User!
     classes: [Class!]!
     educators: [User!]!
@@ -124,23 +127,30 @@ exports.typeDefs = `#graphql
     phone: String
     password: String!
     roleId: ID!
-    # fields not on user model
-    faculty: [UsersFaculties]!
+    # below fields are not on model
+    faculty: [UsersFacultiesRoles]!
     role: Role!
   }
-  type UsersClasses {
+  type UsersClassesRoles {
     _id: ID!
     userId: ID!
     classId: ID!
+    roleId: ID!
+    # below fields are not on model
     user: User!
     class: Class!
+    role: Role!
+    
   }
-  type UsersFaculties {
+  type UsersFacultiesRoles {
     _id: ID!
     userId: ID!
     facultyId: ID!
+    roleId: ID!
+    # below fields are not on model
     user: User!
     faculty: Faculty!
+    role: Role!
   }
   type UsersRoles {
     _id: ID!
@@ -185,12 +195,12 @@ exports.typeDefs = `#graphql
     # User
     users(limit: Int): [User]!
     user(_id: ID!): User
-    # UsersClasses
-    usersClasses(limit: Int): [UsersClasses]!
-    userClass(_id: ID!): UsersClasses
-    # UsersFaculties
-    usersFaculties(limit: Int): [UsersFaculties]!
-    userFaculty(_id: ID!): UsersFaculties
+    # UsersClassesRoles
+    usersClassesRoles(limit: Int): [UsersClassesRoles]!
+    userClass(_id: ID!): UsersClassesRoles
+    # UsersFacultiesRoles
+    usersFacultiesRoles(limit: Int): [UsersFacultiesRoles]!
+    userFaculty(_id: ID!): UsersFacultiesRoles
     # UsersRoles
     usersRoles(limit: Int): [UsersRoles]!
     userRole(_id: ID!): UsersRoles
@@ -234,12 +244,12 @@ exports.resolvers = Object.assign(Object.assign({ Query: {
         // User
         users: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _l; return yield User_1.default.find({}).limit((_l = args.limit) !== null && _l !== void 0 ? _l : 100); }),
         user: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(args._id); }),
-        // UsersClasses
-        usersClasses: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _m; return yield UsersClasses_1.default.find({}).limit((_m = args.limit) !== null && _m !== void 0 ? _m : 100); }),
-        userClass: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersClasses_1.default.findById(args._id); }),
-        // UsersFaculties
-        usersFaculties: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _o; return yield UsersFaculties_1.default.find({}).limit((_o = args.limit) !== null && _o !== void 0 ? _o : 100); }),
-        userFaculty: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersFaculties_1.default.findById(args._id); }),
+        // UsersClassesRoles
+        usersClassesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _m; return yield UsersClassesRoles_1.default.find({}).limit((_m = args.limit) !== null && _m !== void 0 ? _m : 100); }),
+        userClass: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersClassesRoles_1.default.findById(args._id); }),
+        // UsersFacultiesRoles
+        usersFacultiesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _o; return yield UsersFacultiesRoles_1.default.find({}).limit((_o = args.limit) !== null && _o !== void 0 ? _o : 100); }),
+        userFaculty: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersFacultiesRoles_1.default.findById(args._id); }),
         // UsersRoles
         usersRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _p; return yield UsersRoles_1.default.find({}).limit((_p = args.limit) !== null && _p !== void 0 ? _p : 100); }),
         userRole: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersRoles_1.default.findById(args._id); }),

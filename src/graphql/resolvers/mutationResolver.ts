@@ -9,8 +9,8 @@ import Notification from "../../models/Notification";
 import NotificationType from "../../models/NotificationType";
 import Role from "../../models/Role";
 import User from "../../models/User";
-import UsersClasses from "../../models/UsersClasses";
-import UsersFaculties from "../../models/UsersFaculties";
+import UsersClassesRoles from "../../models/UsersClassesRoles";
+import UsersFacultiesRoles from "../../models/UsersFacultiesRoles";
 import UsersRoles from "../../models/UsersRoles";
 
 const mutationResolvers = {
@@ -162,31 +162,31 @@ const mutationResolvers = {
     },
     
     // UsersClasses
-    createUsersClasses: async (_: any, args: { usersClasses: {} }) => {
-      const usersClasses = new UsersClasses(args.usersClasses);
-      return usersClasses.save();
+    createUsersClassesRoles: async (_: any, args: { usersClassesRoles: {} }) => {
+      const usersClassesRoles = new UsersClassesRoles(args.usersClassesRoles);
+      return usersClassesRoles.save();
     },
-    updateUsersClasses: async (_: any, args: { _id: String, usersClasses: {} }) => {
-      const usersClasses = await UsersClasses.findByIdAndUpdate(args._id, args.usersClasses);
-      return await usersClasses?.save();
+    updateUsersClassesRoles: async (_: any, args: { _id: String, usersClassesRoles: {} }) => {
+      const usersClassesRoles = await UsersClassesRoles.findByIdAndUpdate(args._id, args.usersClassesRoles);
+      return await usersClassesRoles?.save();
     },
-    deleteUsersClasses: async (_: any, args: { _id: String }) => {
-      await UsersClasses.findByIdAndDelete(args._id);
-      return await UsersClasses.find({});
+    deleteUsersClassesRoles: async (_: any, args: { _id: String }) => {
+      await UsersClassesRoles.findByIdAndDelete(args._id);
+      return await UsersClassesRoles.find({});
     },
     
     // UsersFaculties
-    createUsersFaculties: async (_: any, args: { usersFaculties: {} }) => {
-      const usersFaculties = new UsersFaculties(args.usersFaculties);
-      return usersFaculties.save();
+    createUsersFacultiesRoles: async (_: any, args: { usersFacultiesRoles: {} }) => {
+      const usersFacultiesRoles = new UsersFacultiesRoles(args.usersFacultiesRoles);
+      return usersFacultiesRoles.save();
     },
-    updateUsersFaculties: async (_: any, args: { _id: String, usersFaculties: {} }) => {
-      const usersFaculties = await UsersFaculties.findByIdAndUpdate(args._id, args.usersFaculties);
-      return await usersFaculties?.save();
+    updateUsersFacultiesRoles: async (_: any, args: { _id: String, usersFacultiesRoles: {} }) => {
+      const usersFacultiesRoles = await UsersFacultiesRoles.findByIdAndUpdate(args._id, args.usersFacultiesRoles);
+      return await usersFacultiesRoles?.save();
     },
-    deleteUsersFaculties: async (_: any, args: { _id: String }) => {
-      await UsersFaculties.findByIdAndDelete(args._id);
-      return await UsersFaculties.find({});
+    deleteUsersFacultiesRoles: async (_: any, args: { _id: String }) => {
+      await UsersFacultiesRoles.findByIdAndDelete(args._id);
+      return await UsersFacultiesRoles.find({});
     },
     
     // UsersRoles

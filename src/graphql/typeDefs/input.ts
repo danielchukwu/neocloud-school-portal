@@ -4,8 +4,8 @@ const mutationInputs = `#graphql
   input updateAttendanceInput { classId: ID, userId: ID, classScheduleId: ID }
   
   # Class
-  input createClassInput { name: String!, about: String!, facultyId: ID! }
-  input updateClassInput { name: String, about: String, facultyId: ID }
+  input createClassInput { name: String!, avatar: String!, about: String!, facultyId: ID! }
+  input updateClassInput { name: String, avatar: String, about: String, facultyId: ID }
   
   # ClassInstance
   input createClassInstanceInput { isCompleted: Boolean!, classId: ID! }
@@ -42,13 +42,13 @@ const mutationInputs = `#graphql
   input createUserInput { name: String!, email: String!, avatar: String, cover: String, bio: String!, phone: String, password: String! roleId: String! }
   input updateUserInput { name: String, email: String, avatar: String, cover: String, bio: String, phone: String roleId: String }
   
-  # UsersClasses
-  input createUsersClassesInput { userId: ID!, classId: ID! }
-  input updateUsersClassesInput { userId: ID, classId: ID }
+  # UsersClassesRoles
+  input createUsersClassesRolesInput { userId: ID!, classId: ID!, roleId: ID!}
+  input updateUsersClassesRolesInput { userId: ID, classId: ID, roleId: ID }
   
-  # UsersClasses
-  input createUsersFacultiesInput { userId: ID!, facultyId: ID! }
-  input updateUsersFacultiesInput { userId: ID, facultyId: ID }
+  # UsersClassesRoles
+  input createUsersFacultiesRolesInput { userId: ID!, facultyId: ID!, roleId: ID! }
+  input updateUsersFacultiesRolesInput { userId: ID, facultyId: ID, roleId: ID }
   
   # UsersRoles
   input createUsersRolesInput { userId: ID!, roleId: ID! }

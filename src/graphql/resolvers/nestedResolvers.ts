@@ -6,7 +6,7 @@ import Faculty from "../../models/Faculty";
 import NotificationType from "../../models/NotificationType";
 import Role from "../../models/Role";
 import User from "../../models/User";
-import UsersFaculties from "../../models/UsersFaculties";
+import UsersFacultiesRoles from "../../models/UsersFacultiesRoles";
 
 const nestedResolvers = {
   Attendance: {
@@ -16,6 +16,10 @@ const nestedResolvers = {
   },
   Class: {
     faculty: async (parent: any) => await Faculty.findById(parent.facultyId),
+    // educators: async (parent: any) => {
+    //   const role = await Role.find({name: 'Educator'});
+    //   return await User.find({roleId: role[0]._id, facultyId: parent._id});
+    // },
   },
   ClassInstance: {
     class: async (parent: any) => await Class.findById(parent.classId),
@@ -36,6 +40,10 @@ const nestedResolvers = {
     classes: async (parent: any) => await Class.find({facultyId: parent._id}),
     educators: async (parent: any) => {
       const role = await Role.find({name: 'Educator'});
+      const roleId = role[0]._id;
+
+      const users = User.find({roleId: role[0]._id});
+
       return await User.find({roleId: role[0]._id, facultyId: parent._id});
     },
     students: async (parent: any) => {
@@ -57,16 +65,18 @@ const nestedResolvers = {
     classwork: async (parent: any) => await Classwork.findById(parent.classworkId), 
   },
   User: {
-    faculty: async (parent: any) => await UsersFaculties.find({userId: parent._id}),
+    faculty: async (parent: any) => await UsersFacultiesRoles.find({userId: parent._id}),
     role: async (parent: any) => await Role.findById(parent.roleId),
   },
-  UsersClasses: {
+  UsersClassesRoles: {
     class: async (parent: any) => await Class.findById(parent.classId),
     user: async (parent: any) => await User.findById(parent.userId),
+    role: async (parent: any) => await Role.findById(parent.roleId),
   },
-  UsersFaculties: {
+  UsersFacultiesRoles: {
     user: async (parent: any) => await User.findById(parent.userId),
     faculty: async (parent: any) => await Faculty.findById(parent.facultyId),
+    role: async (parent: any) => await Role.findById(parent.roleId),
   },
   UsersRoles: {
     role: async (parent: any) => await Role.findById(parent.roleId),

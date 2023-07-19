@@ -51,14 +51,14 @@ const mutationType = `#graphql
     createUser(user: createUserInput!): User!
     updateUser(_id: ID!, user: updateUserInput): User!
     deleteUser(_id: ID!): [User]!
-    # UsersClasses
-    createUsersClasses(userClass: createUsersClassesInput!): UsersClasses!
-    updateUsersClasses(_id: ID!, userClass: updateUsersClassesInput): UsersClasses!
-    deleteUsersClasses(_id: ID!): [UsersClasses]!
+    # UsersClassesRoles
+    createUsersClassesRoles(userClass: createUsersClassesRolesInput!): UsersClassesRoles!
+    updateUsersClassesRoles(_id: ID!, userClass: updateUsersClassesRolesInput): UsersClassesRoles!
+    deleteUsersClassesRoles(_id: ID!): [UsersClassesRoles]!
     # UsersFaculties
-    createUsersFaculties(userClass: createUsersFacultiesInput!): UsersFaculties!
-    updateUsersFaculties(_id: ID!, userClass: updateUsersFacultiesInput): UsersFaculties!
-    deleteUsersFaculties(_id: ID!): [UsersClasses]!
+    createUsersFacultiesRoles(userClass: createUsersFacultiesRolesInput!): UsersFacultiesRoles!
+    updateUsersFacultiesRoles(_id: ID!, userClass: updateUsersFacultiesRolesInput): UsersFacultiesRoles!
+    deleteUsersFacultiesRoles(_id: ID!): [UsersFacultiesRoles]!
     # UsersRoles
     createUsersRoles(userRole: createUsersRolesInput!): UsersRoles!
     updateUsersRoles(_id: ID!, userRole: updateUsersRolesInput): UsersRoles!

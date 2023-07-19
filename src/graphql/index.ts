@@ -9,8 +9,8 @@ import Notification from "../models/Notification";
 import NotificationType from "../models/NotificationType";
 import Role from "../models/Role";
 import User from "../models/User";
-import UsersClasses from "../models/UsersClasses";
-import UsersFaculties from "../models/UsersFaculties";
+import UsersClassesRoles from "../models/UsersClassesRoles";
+import UsersFacultiesRoles from "../models/UsersFacultiesRoles";
 import UsersRoles from "../models/UsersRoles";
 import nestedQueryResolvers from "./resolvers/nestedResolvers";
 import mutationResolvers from "./resolvers/mutationResolver";
@@ -30,9 +30,12 @@ export const typeDefs = `#graphql
   type Class {
     _id: ID!
     name: String!
+    avatar: String
     about: String!
     facultyId: ID!
+    # 
     faculty: Faculty!
+    educators: [User!]!
   }
   type ClassInstance {
     _id: ID!
@@ -75,7 +78,7 @@ export const typeDefs = `#graphql
     name: String!
     about: String!
     hodId: ID!
-    # Not default field values below
+    # Not Model field values below
     hod: User!
     classes: [Class!]!
     educators: [User!]!
@@ -110,23 +113,30 @@ export const typeDefs = `#graphql
     phone: String
     password: String!
     roleId: ID!
-    # fields not on user model
-    faculty: [UsersFaculties]!
+    # below fields are not on model
+    faculty: [UsersFacultiesRoles]!
     role: Role!
   }
-  type UsersClasses {
+  type UsersClassesRoles {
     _id: ID!
     userId: ID!
     classId: ID!
+    roleId: ID!
+    # below fields are not on model
     user: User!
     class: Class!
+    role: Role!
+    
   }
-  type UsersFaculties {
+  type UsersFacultiesRoles {
     _id: ID!
     userId: ID!
     facultyId: ID!
+    roleId: ID!
+    # below fields are not on model
     user: User!
     faculty: Faculty!
+    role: Role!
   }
   type UsersRoles {
     _id: ID!
@@ -171,12 +181,12 @@ export const typeDefs = `#graphql
     # User
     users(limit: Int): [User]!
     user(_id: ID!): User
-    # UsersClasses
-    usersClasses(limit: Int): [UsersClasses]!
-    userClass(_id: ID!): UsersClasses
-    # UsersFaculties
-    usersFaculties(limit: Int): [UsersFaculties]!
-    userFaculty(_id: ID!): UsersFaculties
+    # UsersClassesRoles
+    usersClassesRoles(limit: Int): [UsersClassesRoles]!
+    userClass(_id: ID!): UsersClassesRoles
+    # UsersFacultiesRoles
+    usersFacultiesRoles(limit: Int): [UsersFacultiesRoles]!
+    userFaculty(_id: ID!): UsersFacultiesRoles
     # UsersRoles
     usersRoles(limit: Int): [UsersRoles]!
     userRole(_id: ID!): UsersRoles
@@ -225,12 +235,12 @@ export const resolvers = {
     // User
     users: async (_: any, args: {limit: number}) => await User.find({}).limit(args.limit ?? 100),
     user: async (_: any, args: { _id: String }) => await User.findById(args._id),
-    // UsersClasses
-    usersClasses: async (_: any, args: {limit: number}) => await UsersClasses.find({}).limit(args.limit ?? 100),
-    userClass: async (_: any, args: { _id: String }) => await UsersClasses.findById(args._id),
-    // UsersFaculties
-    usersFaculties: async (_: any, args: {limit: number}) => await UsersFaculties.find({}).limit(args.limit ?? 100),
-    userFaculty: async (_: any, args: { _id: String }) => await UsersFaculties.findById(args._id),
+    // UsersClassesRoles
+    usersClassesRoles: async (_: any, args: {limit: number}) => await UsersClassesRoles.find({}).limit(args.limit ?? 100),
+    userClass: async (_: any, args: { _id: String }) => await UsersClassesRoles.findById(args._id),
+    // UsersFacultiesRoles
+    usersFacultiesRoles: async (_: any, args: {limit: number}) => await UsersFacultiesRoles.find({}).limit(args.limit ?? 100),
+    userFaculty: async (_: any, args: { _id: String }) => await UsersFacultiesRoles.findById(args._id),
     // UsersRoles
     usersRoles: async (_: any, args: {limit: number}) => await UsersRoles.find({}).limit(args.limit ?? 100),
     userRole: async (_: any, args: { _id: String }) => await UsersRoles.findById(args._id),

@@ -20,7 +20,7 @@ const Faculty_1 = __importDefault(require("../../models/Faculty"));
 const NotificationType_1 = __importDefault(require("../../models/NotificationType"));
 const Role_1 = __importDefault(require("../../models/Role"));
 const User_1 = __importDefault(require("../../models/User"));
-const UsersFaculties_1 = __importDefault(require("../../models/UsersFaculties"));
+const UsersFacultiesRoles_1 = __importDefault(require("../../models/UsersFacultiesRoles"));
 const nestedResolvers = {
     Attendance: {
         class: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(parent.classId); }),
@@ -29,6 +29,10 @@ const nestedResolvers = {
     },
     Class: {
         faculty: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Faculty_1.default.findById(parent.facultyId); }),
+        // educators: async (parent: any) => {
+        //   const role = await Role.find({name: 'Educator'});
+        //   return await User.find({roleId: role[0]._id, facultyId: parent._id});
+        // },
     },
     ClassInstance: {
         class: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(parent.classId); }),
@@ -49,6 +53,8 @@ const nestedResolvers = {
         classes: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.find({ facultyId: parent._id }); }),
         educators: (parent) => __awaiter(void 0, void 0, void 0, function* () {
             const role = yield Role_1.default.find({ name: 'Educator' });
+            const roleId = role[0]._id;
+            const users = User_1.default.find({ roleId: role[0]._id });
             return yield User_1.default.find({ roleId: role[0]._id, facultyId: parent._id });
         }),
         students: (parent) => __awaiter(void 0, void 0, void 0, function* () {
@@ -70,16 +76,18 @@ const nestedResolvers = {
         classwork: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Classwork_1.default.findById(parent.classworkId); }),
     },
     User: {
-        faculty: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersFaculties_1.default.find({ userId: parent._id }); }),
+        faculty: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersFacultiesRoles_1.default.find({ userId: parent._id }); }),
         role: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Role_1.default.findById(parent.roleId); }),
     },
-    UsersClasses: {
+    UsersClassesRoles: {
         class: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(parent.classId); }),
         user: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(parent.userId); }),
+        role: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Role_1.default.findById(parent.roleId); }),
     },
-    UsersFaculties: {
+    UsersFacultiesRoles: {
         user: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(parent.userId); }),
         faculty: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Faculty_1.default.findById(parent.facultyId); }),
+        role: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Role_1.default.findById(parent.roleId); }),
     },
     UsersRoles: {
         role: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Role_1.default.findById(parent.roleId); }),
