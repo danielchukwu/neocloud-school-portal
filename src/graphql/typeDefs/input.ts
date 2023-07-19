@@ -4,8 +4,8 @@ const mutationInputs = `#graphql
   input updateAttendanceInput { classId: ID, userId: ID, classScheduleId: ID }
   
   # Class
-  input createClassInput { title: String!, description: String!, facultyId: ID! }
-  input updateClassInput { title: String, description: String, facultyId: ID }
+  input createClassInput { name: String!, about: String!, facultyId: ID! }
+  input updateClassInput { name: String, about: String, facultyId: ID }
   
   # ClassInstance
   input createClassInstanceInput { isCompleted: Boolean!, classId: ID! }

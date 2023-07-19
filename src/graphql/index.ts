@@ -29,8 +29,8 @@ export const typeDefs = `#graphql
   }
   type Class {
     _id: ID!
-    title: String!
-    description: String!
+    name: String!
+    about: String!
     facultyId: ID!
     faculty: Faculty!
   }
@@ -75,7 +75,11 @@ export const typeDefs = `#graphql
     name: String!
     about: String!
     hodId: ID!
+    # Not default field values below
     hod: User!
+    # classesCount: Int!
+    # educatorsCount: Int!
+    # studentsCount: Int!
   }
   type Notification {
     _id: ID!
