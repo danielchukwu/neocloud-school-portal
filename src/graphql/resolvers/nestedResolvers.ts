@@ -33,6 +33,24 @@ const nestedResolvers = {
   },
   Faculty: {
     hod: async (parent: any) => await User.findById(parent.hodId),
+    classes: async (parent: any) => await Class.find({facultyId: parent._id}),
+    educators: async (parent: any) => {
+      const role = await Role.find({name: 'Educator'});
+      return await User.find({roleId: role[0]._id, facultyId: parent._id});
+    },
+    students: async (parent: any) => {
+      const role = await Role.find({name: 'Student'});
+      return await User.find({roleId: role[0]._id, facultyId: parent._id});
+    },
+    classesCount: async (parent: any) => await Class.find({facultyId: parent._id}).count(),
+    educatorsCount: async (parent: any) => {
+      const role = await Role.find({name: 'Educator'});
+      return await User.find({roleId: role[0]._id, facultyId: parent._id}).count();
+    },
+    studentsCount: async (parent: any) => {
+      const role = await Role.find({name: 'Student'});
+      return await User.find({roleId: role[0]._id, facultyId: parent._id}).count();
+    },
   },
   Notification: {
     notificationType: async (parent: any) => await NotificationType.findById(parent.notificationTypeId),

@@ -60,11 +60,11 @@ bootstrapApp();
 // Attendance 
 // ClassInstance 🚀
 // ClassModule 🚀
-// ClassSchedule 
-// Classwork 
+// ClassSchedule 🚀
+// Classwork 🚀
 // Notifications 
 // NotificationType 
-// Role 
+// Role 🚀
 // UsersClasses 
 // UsersFaculties 
 // UsersRoles 

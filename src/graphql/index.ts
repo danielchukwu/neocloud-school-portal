@@ -77,9 +77,12 @@ export const typeDefs = `#graphql
     hodId: ID!
     # Not default field values below
     hod: User!
-    # classesCount: Int!
-    # educatorsCount: Int!
-    # studentsCount: Int!
+    classes: [Class!]!
+    educators: [User!]!
+    students: [User!]!
+    classesCount: Int!
+    educatorsCount: Int!
+    studentsCount: Int!
   }
   type Notification {
     _id: ID!
@@ -106,8 +109,9 @@ export const typeDefs = `#graphql
     bio: String!
     phone: String
     password: String!
-    faculty: [UsersFaculties]!
     roleId: ID!
+    # fields not on user model
+    faculty: [UsersFaculties]!
     role: Role!
   }
   type UsersClasses {

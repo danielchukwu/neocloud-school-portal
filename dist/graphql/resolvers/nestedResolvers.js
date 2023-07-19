@@ -46,6 +46,24 @@ const nestedResolvers = {
     },
     Faculty: {
         hod: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(parent.hodId); }),
+        classes: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.find({ facultyId: parent._id }); }),
+        educators: (parent) => __awaiter(void 0, void 0, void 0, function* () {
+            const role = yield Role_1.default.find({ name: 'Educator' });
+            return yield User_1.default.find({ roleId: role[0]._id, facultyId: parent._id });
+        }),
+        students: (parent) => __awaiter(void 0, void 0, void 0, function* () {
+            const role = yield Role_1.default.find({ name: 'Student' });
+            return yield User_1.default.find({ roleId: role[0]._id, facultyId: parent._id });
+        }),
+        classesCount: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.find({ facultyId: parent._id }).count(); }),
+        educatorsCount: (parent) => __awaiter(void 0, void 0, void 0, function* () {
+            const role = yield Role_1.default.find({ name: 'Educator' });
+            return yield User_1.default.find({ roleId: role[0]._id, facultyId: parent._id }).count();
+        }),
+        studentsCount: (parent) => __awaiter(void 0, void 0, void 0, function* () {
+            const role = yield Role_1.default.find({ name: 'Student' });
+            return yield User_1.default.find({ roleId: role[0]._id, facultyId: parent._id }).count();
+        }),
     },
     Notification: {
         notificationType: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield NotificationType_1.default.findById(parent.notificationTypeId); }),
