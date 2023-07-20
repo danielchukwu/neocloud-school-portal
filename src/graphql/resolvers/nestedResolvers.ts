@@ -33,6 +33,7 @@ const nestedResolvers = {
   },
   ClassInstance: {
     class: async (parent: any) => await Class.findById(parent.classId),
+    educator: async (parent: any) => await User.findById(parent.educatorId),
   },
   ClassModule: {
     class: async (parent: any) => await Class.findById(parent.classId),
@@ -87,6 +88,7 @@ const nestedResolvers = {
   Notification: {
     notificationType: async (parent: any) => await NotificationType.findById(parent.notificationTypeId),
     classwork: async (parent: any) => await Classwork.findById(parent.classworkId), 
+    user: async (parent: any) => await User.findById(parent.userId),
   },
   User: {
     faculty: async (parent: any) => await UsersFacultiesRoles.find({userId: parent._id}),
