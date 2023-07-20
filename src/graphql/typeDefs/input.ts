@@ -8,8 +8,8 @@ const mutationInputs = `#graphql
   input updateClassInput { name: String, avatar: String, about: String, facultyId: ID }
   
   # ClassInstance
-  input createClassInstanceInput { isCompleted: Boolean!, classId: ID! }
-  input updateClassInstanceInput { isCompleted: Boolean }
+  input createClassInstanceInput { isCompleted: Boolean!, classId: ID! educatorId: ID! }
+  input updateClassInstanceInput { isCompleted: Boolean, educatorId: ID }
   
   # ClassModule
   input createClassModuleInput { order: Int!, title: String!, classId: ID! }
@@ -28,7 +28,7 @@ const mutationInputs = `#graphql
   input updateFacultyInput { name: String,about: String, hodId: ID }
   
   # Notification
-  input createNotificationInput { body: String, notificationTypeId: ID!, classworkId: ID }
+  input createNotificationInput { body: String, notificationTypeId: ID!, classworkId: ID, userId: ID}
   
   # NotificationType
   input createNotificationTypeInput { name: String! }
