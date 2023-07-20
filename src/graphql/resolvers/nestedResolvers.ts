@@ -9,6 +9,7 @@ import Role from "../../models/Role";
 import User from "../../models/User";
 import UsersClassesRoles from "../../models/UsersClassesRoles";
 import UsersFacultiesRoles from "../../models/UsersFacultiesRoles";
+import ClassInstance from "../../models/ClassInstance";
 
 const nestedResolvers = {
   Attendance: {
@@ -89,6 +90,8 @@ const nestedResolvers = {
     notificationType: async (parent: any) => await NotificationType.findById(parent.notificationTypeId),
     classwork: async (parent: any) => await Classwork.findById(parent.classworkId), 
     user: async (parent: any) => await User.findById(parent.userId),
+    classInstance: async (parent: any) => await ClassInstance.findById(parent.classInstanceId),
+    faculty: async (parent: any) => await Faculty.findById(parent.facultyId),
   },
   User: {
     faculty: async (parent: any) => await UsersFacultiesRoles.find({userId: parent._id}),

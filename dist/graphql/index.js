@@ -66,6 +66,7 @@ exports.typeDefs = `#graphql
     order: Int!
     title: String!
     classId: ID!
+    # below fields are not on model
     class: Class!
   }
   type ClassSchedule {
@@ -77,6 +78,7 @@ exports.typeDefs = `#graphql
     startTime: String
     endTime: String
     classModuleId: ID!
+    # below fields are not on model
     classModule: ClassModule!
   }
   type Classwork {
@@ -87,6 +89,7 @@ exports.typeDefs = `#graphql
     classId: ID!
     facultyId: ID!
     classScheduleId: ID!
+    # below fields are not on model
     class: Class!
     faculty: Faculty!
     classSchedule: ClassSchedule!
@@ -96,7 +99,7 @@ exports.typeDefs = `#graphql
     name: String!
     about: String!
     hodId: ID!
-    # Not Model field values below
+    # below fields are not on model
     hod: User!
     classes: [Class!]!
     educators: [User!]!
@@ -111,10 +114,14 @@ exports.typeDefs = `#graphql
     notificationTypeId: ID!
     classworkId: ID
     userId: ID
-    # Not Model field values below
+    classInstanceId: String
+    facultyId: String
+    # below fields are not on model
     notificationType: NotificationType!
     classwork: Classwork
     user: User
+    classInstance: ClassInstance
+    faculty: Faculty
   }
   type NotificationType{
     _id: ID!
@@ -163,6 +170,7 @@ exports.typeDefs = `#graphql
     _id: ID!
     userId: ID!
     roleId: ID!
+    # below fields are not on model
     user: User!
     role: Role!
   }

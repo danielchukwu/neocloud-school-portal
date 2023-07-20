@@ -22,6 +22,7 @@ const Role_1 = __importDefault(require("../../models/Role"));
 const User_1 = __importDefault(require("../../models/User"));
 const UsersClassesRoles_1 = __importDefault(require("../../models/UsersClassesRoles"));
 const UsersFacultiesRoles_1 = __importDefault(require("../../models/UsersFacultiesRoles"));
+const ClassInstance_1 = __importDefault(require("../../models/ClassInstance"));
 const nestedResolvers = {
     Attendance: {
         class: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(parent.classId); }),
@@ -92,6 +93,8 @@ const nestedResolvers = {
         notificationType: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield NotificationType_1.default.findById(parent.notificationTypeId); }),
         classwork: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Classwork_1.default.findById(parent.classworkId); }),
         user: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(parent.userId); }),
+        classInstance: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassInstance_1.default.findById(parent.classInstanceId); }),
+        faculty: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Faculty_1.default.findById(parent.facultyId); }),
     },
     User: {
         faculty: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersFacultiesRoles_1.default.find({ userId: parent._id }); }),
