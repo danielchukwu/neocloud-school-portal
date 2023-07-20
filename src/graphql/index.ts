@@ -23,6 +23,7 @@ export const typeDefs = `#graphql
     classId: ID!
     userId: ID!
     classScheduleId: ID!
+    # below fields are not on model
     class: Class!
     user: User!
     classSchedule: ClassSchedule!
@@ -97,7 +98,7 @@ export const typeDefs = `#graphql
   }
   type NotificationType{
     _id: ID!
-    title: String!
+    name: String!
   }
   type Role {
     _id: ID!
