@@ -31,8 +31,8 @@ const mutationInputs = `#graphql
   input createNotificationInput { body: String, notificationTypeId: ID!, classworkId: ID }
   
   # NotificationType
-  input createNotificationTypeInput { title: String! }
-  input updateNotificationTypeInput { title: String }
+  input createNotificationTypeInput { name: String! }
+  input updateNotificationTypeInput { name: String }
   
   # Role
   input createRoleInput { name: String! }
