@@ -67,8 +67,15 @@ const nestedResolvers = {
             return educators;
         }),
         students: (parent) => __awaiter(void 0, void 0, void 0, function* () {
-            const role = yield Role_1.default.find({ name: 'Student' });
-            return yield User_1.default.find({ roleId: role[0]._id, facultyId: parent._id });
+            // const role = await Role.find({name: 'Student'});
+            // return await User.find({roleId: role[0]._id, facultyId: parent._id});
+            const role = yield Role_1.default.findOne({ name: 'Student' });
+            const usersFacultiesRolesList = yield UsersFacultiesRoles_1.default.find({ roleId: role === null || role === void 0 ? void 0 : role._id, facultyId: parent._id });
+            const students = [];
+            yield Promise.all(usersFacultiesRolesList.map((item) => __awaiter(void 0, void 0, void 0, function* () {
+                students.push(yield User_1.default.findById(item.userId));
+            })));
+            return students;
         }),
         classesCount: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.find({ facultyId: parent._id }).count(); }),
         educatorsCount: (parent) => __awaiter(void 0, void 0, void 0, function* () {

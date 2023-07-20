@@ -61,8 +61,18 @@ const nestedResolvers = {
       return educators;
     },
     students: async (parent: any) => {
-      const role = await Role.find({name: 'Student'});
-      return await User.find({roleId: role[0]._id, facultyId: parent._id});
+      // const role = await Role.find({name: 'Student'});
+      // return await User.find({roleId: role[0]._id, facultyId: parent._id});
+      const role = await Role.findOne({name: 'Student'});
+      const usersFacultiesRolesList = await UsersFacultiesRoles.find({roleId: role?._id, facultyId: parent._id});
+
+      const students: any[] = [];
+
+      await Promise.all(usersFacultiesRolesList.map(async(item) => {
+        students.push(await User.findById(item.userId));
+      }));
+
+      return students;
     },
     classesCount: async (parent: any) => await Class.find({facultyId: parent._id}).count(),
     educatorsCount: async (parent: any) => {
