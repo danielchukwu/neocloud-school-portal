@@ -56,6 +56,9 @@ exports.typeDefs = `#graphql
     _id: ID!
     isCompleted: Boolean!
     classId: ID!
+    educatorId: ID!
+    # below fields are not on model
+    educator: User!
     class: Class!
   }
   type ClassModule {
@@ -107,8 +110,11 @@ exports.typeDefs = `#graphql
     body: String
     notificationTypeId: ID!
     classworkId: ID
+    userId: ID
+    # Not Model field values below
     notificationType: NotificationType!
     classwork: Classwork
+    user: User
   }
   type NotificationType{
     _id: ID!
