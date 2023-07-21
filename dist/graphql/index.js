@@ -187,7 +187,7 @@ exports.typeDefs = `#graphql
     classInstances(limit: Int): [ClassInstance]!
     classInstance(_id: ID!): ClassInstance
     # ClassModule
-    classModules(limit: Int): [ClassModule]!
+    classModules(limit: Int, classId: ID): [ClassModule]!
     classModule(_id: ID!): ClassModule
     # ClassSchedule
     classSchedules(limit: Int): [ClassSchedule]!
@@ -236,7 +236,7 @@ exports.resolvers = Object.assign(Object.assign({ Query: {
         classInstances: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _c; return yield ClassInstance_1.default.find({}).limit((_c = args.limit) !== null && _c !== void 0 ? _c : 100); }),
         classInstance: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassInstance_1.default.findById(args._id); }),
         // ClassModule
-        classModules: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _d; return yield ClassModule_1.default.find({}).limit((_d = args.limit) !== null && _d !== void 0 ? _d : 100); }),
+        classModules: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _d; return yield ClassModule_1.default.find(args.classId ? { classId: args.classId } : {}).limit((_d = args.limit) !== null && _d !== void 0 ? _d : 100); }),
         classModule: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassModule_1.default.findById(args._id); }),
         // ClassSchedule
         classSchedules: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _e; return yield ClassSchedule_1.default.find({}).limit((_e = args.limit) !== null && _e !== void 0 ? _e : 100); }),

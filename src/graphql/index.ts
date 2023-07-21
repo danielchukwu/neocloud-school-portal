@@ -173,7 +173,7 @@ export const typeDefs = `#graphql
     classInstances(limit: Int): [ClassInstance]!
     classInstance(_id: ID!): ClassInstance
     # ClassModule
-    classModules(limit: Int): [ClassModule]!
+    classModules(limit: Int, classId: ID): [ClassModule]!
     classModule(_id: ID!): ClassModule
     # ClassSchedule
     classSchedules(limit: Int): [ClassSchedule]!
@@ -226,7 +226,7 @@ export const resolvers = {
     classInstances: async (_: any, args: {limit: number}) => await ClassInstance.find({}).limit(args.limit ?? 100),
     classInstance: async (_: any, args: { _id: String }) => await ClassInstance.findById(args._id),
     // ClassModule
-    classModules: async (_: any, args: {limit: number}) => await ClassModule.find({}).limit(args.limit ?? 100),
+    classModules: async (_: any, args: {limit: number, classId: String}) => await ClassModule.find(args.classId ? {classId: args.classId} : {}).limit(args.limit ?? 100),
     classModule: async (_: any, args: { _id: String }) => await ClassModule.findById(args._id),
     // ClassSchedule
     classSchedules: async (_: any, args: {limit: number}) => await ClassSchedule.find({}).limit(args.limit ?? 100),
