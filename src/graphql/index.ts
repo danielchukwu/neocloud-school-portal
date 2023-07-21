@@ -54,6 +54,7 @@ export const typeDefs = `#graphql
     classId: ID!
     # below fields are not on model
     class: Class!
+    classSchedules: [ClassSchedule]!
   }
   type ClassSchedule {
     _id: ID!
