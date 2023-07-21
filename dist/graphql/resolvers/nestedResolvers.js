@@ -47,7 +47,7 @@ const nestedResolvers = {
     },
     ClassModule: {
         class: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(parent.classId); }),
-        classSchedules: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassSchedule_1.default.findById({ classModuleId: parent.id }); }),
+        classSchedules: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassSchedule_1.default.find({ classModuleId: parent._id }); }),
     },
     ClassSchedule: {
         classModule: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassModule_1.default.findById(parent.classModuleId); }),
