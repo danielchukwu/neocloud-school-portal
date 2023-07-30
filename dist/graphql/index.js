@@ -112,17 +112,17 @@ exports.typeDefs = `#graphql
   type Notification {
     _id: ID!
     body: String
-    notificationTypeId: ID!
-    classworkId: ID
+    notificationTypeId: ID
     userId: ID
-    classInstanceId: String
-    facultyId: String
+    classworkId: ID!
+    classInstanceId: ID!
+    facultyId: ID!
     # below fields are not on model
-    notificationType: NotificationType!
-    classwork: Classwork
+    notificationType: NotificationType
     user: User
-    classInstance: ClassInstance
-    faculty: Faculty
+    classwork: Classwork!
+    classInstance: ClassInstance!
+    faculty: Faculty!
   }
   type NotificationType{
     _id: ID!
