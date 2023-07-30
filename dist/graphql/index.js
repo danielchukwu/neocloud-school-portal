@@ -213,10 +213,10 @@ exports.typeDefs = `#graphql
     user(_id: ID!): User
     # UsersClassesRoles
     usersClassesRoles(limit: Int): [UsersClassesRoles]!
-    userClass(_id: ID!): UsersClassesRoles
+    userClassRole(_id: ID!): UsersClassesRoles
     # UsersFacultiesRoles
     usersFacultiesRoles(limit: Int): [UsersFacultiesRoles]!
-    userFaculty(_id: ID!): UsersFacultiesRoles
+    userFacultyRole(_id: ID!): UsersFacultiesRoles
     # UsersRoles
     usersRoles(limit: Int): [UsersRoles]!
     userRole(_id: ID!): UsersRoles
