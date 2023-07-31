@@ -253,10 +253,10 @@ export const resolvers = {
     user: async (_: any, args: { _id: String }) => await User.findById(args._id),
     // UsersClassesRoles
     usersClassesRoles: async (_: any, args: {limit: number}) => await UsersClassesRoles.find({}).limit(args.limit ?? 100),
-    userClass: async (_: any, args: { _id: String }) => await UsersClassesRoles.findById(args._id),
+    userClassRole: async (_: any, args: { _id: String }) => await UsersClassesRoles.findById(args._id),
     // UsersFacultiesRoles
     usersFacultiesRoles: async (_: any, args: {limit: number}) => await UsersFacultiesRoles.find({}).limit(args.limit ?? 100),
-    userFaculty: async (_: any, args: { _id: String }) => await UsersFacultiesRoles.findById(args._id),
+    userFacultyRole: async (_: any, args: { _id: String }) => await UsersFacultiesRoles.findById(args._id),
     // UsersRoles
     usersRoles: async (_: any, args: {limit: number}) => await UsersRoles.find({}).limit(args.limit ?? 100),
     userRole: async (_: any, args: { _id: String }) => await UsersRoles.findById(args._id),
