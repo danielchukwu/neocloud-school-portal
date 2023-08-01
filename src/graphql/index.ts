@@ -168,7 +168,7 @@ export const typeDefs = `#graphql
     attendances(limit: Int): [Attendance]!
     attendance(_id: ID!): Attendance
     # Class
-    classes(limit: Int): [Class]!
+    classes(limit: Int, name: String): [Class]!
     class(_id: ID!): Class
     # ClassInstance
     classInstances(limit: Int): [ClassInstance]!
@@ -195,7 +195,7 @@ export const typeDefs = `#graphql
     roles(limit: Int): [Role]!
     role(_id: ID!): Role
     # User
-    users(limit: Int): [User]!
+    users(limit: Int, name: String): [User]!
     user(_id: ID!): User
     # UsersClassesRoles
     usersClassesRoles(limit: Int): [UsersClassesRoles]!
@@ -218,10 +218,9 @@ export const resolvers = {
   Query: {
     // Attendance
     attendances: async (_: any, args: {limit: number}) => await Attendance.find({}).limit(args.limit ?? 100),
-    attendance: async (_: any
-      , args: { _id: String }) => await Attendance.findById(args._id),
+    attendance: async (_: any, args: { _id: String }) => await Attendance.findById(args._id),
     // Class
-    classes: async (_: any, args: {limit: number}) => await Class.find({}).limit(args.limit ?? 100),
+    classes: async (_: any, args: {limit: number, name: string}) => await Class.find(args.name ? {name:  new RegExp(args.name, 'i')} : {}).limit(args.limit ?? 100),
     class: async (_: any, args: { _id: String }) => await Class.findById(args._id),
     // ClassInstance
     classInstances: async (_: any, args: {limit: number}) => await ClassInstance.find({}).limit(args.limit ?? 100),
@@ -249,7 +248,7 @@ export const resolvers = {
     roles: async (_: any, args: {limit: number}) => await Role.find({}).limit(args.limit ?? 100),
     role: async (_: any, args: { _id: String }) => await Role.findById(args._id),
     // User
-    users: async (_: any, args: {limit: number}) => await User.find({}).limit(args.limit ?? 100),
+    users: async (_: any, args: {limit: number, name: string}) => await User.find(args.name ? {name:  new RegExp(args.name, 'i')} : {}).limit(args.limit ?? 100),
     user: async (_: any, args: { _id: String }) => await User.findById(args._id),
     // UsersClassesRoles
     usersClassesRoles: async (_: any, args: {limit: number}) => await UsersClassesRoles.find({}).limit(args.limit ?? 100),

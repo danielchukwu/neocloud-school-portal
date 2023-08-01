@@ -182,7 +182,7 @@ exports.typeDefs = `#graphql
     attendances(limit: Int): [Attendance]!
     attendance(_id: ID!): Attendance
     # Class
-    classes(limit: Int): [Class]!
+    classes(limit: Int, name: String): [Class]!
     class(_id: ID!): Class
     # ClassInstance
     classInstances(limit: Int): [ClassInstance]!
@@ -209,7 +209,7 @@ exports.typeDefs = `#graphql
     roles(limit: Int): [Role]!
     role(_id: ID!): Role
     # User
-    users(limit: Int): [User]!
+    users(limit: Int, name: String): [User]!
     user(_id: ID!): User
     # UsersClassesRoles
     usersClassesRoles(limit: Int): [UsersClassesRoles]!
@@ -231,7 +231,7 @@ exports.resolvers = Object.assign(Object.assign({ Query: {
         attendances: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _a; return yield Attendance_1.default.find({}).limit((_a = args.limit) !== null && _a !== void 0 ? _a : 100); }),
         attendance: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Attendance_1.default.findById(args._id); }),
         // Class
-        classes: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _b; return yield Class_1.default.find({}).limit((_b = args.limit) !== null && _b !== void 0 ? _b : 100); }),
+        classes: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _b; return yield Class_1.default.find(args.name ? { name: new RegExp(args.name, 'i') } : {}).limit((_b = args.limit) !== null && _b !== void 0 ? _b : 100); }),
         class: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(args._id); }),
         // ClassInstance
         classInstances: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _c; return yield ClassInstance_1.default.find({}).limit((_c = args.limit) !== null && _c !== void 0 ? _c : 100); }),
@@ -258,7 +258,7 @@ exports.resolvers = Object.assign(Object.assign({ Query: {
         roles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _k; return yield Role_1.default.find({}).limit((_k = args.limit) !== null && _k !== void 0 ? _k : 100); }),
         role: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Role_1.default.findById(args._id); }),
         // User
-        users: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _l; return yield User_1.default.find({}).limit((_l = args.limit) !== null && _l !== void 0 ? _l : 100); }),
+        users: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _l; return yield User_1.default.find(args.name ? { name: new RegExp(args.name, 'i') } : {}).limit((_l = args.limit) !== null && _l !== void 0 ? _l : 100); }),
         user: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(args._id); }),
         // UsersClassesRoles
         usersClassesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _m; return yield UsersClassesRoles_1.default.find({}).limit((_m = args.limit) !== null && _m !== void 0 ? _m : 100); }),
