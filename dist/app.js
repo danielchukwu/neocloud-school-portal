@@ -31,7 +31,8 @@ const port = process.env.PORT || 8000;
 const bootstrapApp = () => __awaiter(void 0, void 0, void 0, function* () {
     // Create apollo server
     const server = new server_1.ApolloServer({
-        schema: (0, graphql_middleware_1.applyMiddleware)((0, schema_1.makeExecutableSchema)({ typeDefs: graphql_1.typeDefs, resolvers: graphql_1.resolvers }), permissions_1.default)
+        schema: (0, graphql_middleware_1.applyMiddleware)((0, schema_1.makeExecutableSchema)({ typeDefs: graphql_1.typeDefs, resolvers: graphql_1.resolvers }), permissions_1.default),
+        introspection: process.env.NODE_ENV !== 'production',
     });
     yield server.start();
     // middleware
@@ -63,7 +64,7 @@ const bootstrapApp = () => __awaiter(void 0, void 0, void 0, function* () {
         .catch((err) => console.log(err));
     // routes
     app.get("/", (req, res) => {
-        res.json({ data: { routes: "Server up and running" } });
+        res.json({ data: { routes: "Server up and running\n🚀 Graphql Server ready at http://localhost:${port}/graphql" } });
     });
 });
 bootstrapApp();

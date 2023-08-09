@@ -20,7 +20,8 @@ const port = process.env.PORT || 8000;
 const bootstrapApp = async () => {
   // Create apollo server
   const server = new ApolloServer({
-    schema: applyMiddleware(makeExecutableSchema({ typeDefs, resolvers }), permissions)
+    schema: applyMiddleware(makeExecutableSchema({ typeDefs, resolvers }), permissions),
+    introspection: process.env.NODE_ENV !== 'production',
   });
   await server.start();
 
@@ -57,7 +58,7 @@ const bootstrapApp = async () => {
 
   // routes
   app.get("/", (req, res) => {
-    res.json({ data: { routes: "Server up and running" } });
+    res.json({ data: { routes: "Server up and running\n🚀 Graphql Server ready at http://localhost:${port}/graphql" } });
   });
 };
 bootstrapApp();
