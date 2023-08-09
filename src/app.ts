@@ -1,15 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+import mongoose from "mongoose";
+import permissions from "./permissions";
 import { ApolloServer } from "@apollo/server";
 import { applyMiddleware } from "graphql-middleware";
 import { expressMiddleware } from "@apollo/server/express4";
 import { typeDefs, resolvers } from "./graphql";
-import cors from "cors";
-import mongoose from "mongoose";
-import jwt from 'jsonwebtoken';
-import { GraphQLError } from "graphql";
-import permissions from "./permissions";
 import { makeExecutableSchema } from "@graphql-tools/schema"
+import { decodeToken } from "./jwt/jwt";
 
 
 // load env variables into process.env
@@ -23,7 +22,6 @@ const bootstrapApp = async () => {
   const server = new ApolloServer({
     schema: applyMiddleware(makeExecutableSchema({ typeDefs, resolvers }), permissions)
   });
-  
   await server.start();
 
   // middleware
@@ -63,13 +61,3 @@ const bootstrapApp = async () => {
   });
 };
 bootstrapApp();
-
-
-const decodeToken = (token: string) => {
-  try {
-    const user = jwt.verify(token, `${process.env.SECRET_KEY}`)
-    return user;
-  } catch (err: any) {
-    throw new GraphQLError(err.message);
-  }
-}

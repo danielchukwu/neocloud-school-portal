@@ -14,16 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const cors_1 = __importDefault(require("cors"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const permissions_1 = __importDefault(require("./permissions"));
 const server_1 = require("@apollo/server");
 const graphql_middleware_1 = require("graphql-middleware");
 const express4_1 = require("@apollo/server/express4");
 const graphql_1 = require("./graphql");
-const cors_1 = __importDefault(require("cors"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const graphql_2 = require("graphql");
-const permissions_1 = __importDefault(require("./permissions"));
 const schema_1 = require("@graphql-tools/schema");
+const jwt_1 = require("./jwt/jwt");
 // load env variables into process.env
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -45,7 +44,7 @@ const bootstrapApp = () => __awaiter(void 0, void 0, void 0, function* () {
             var _a;
             const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
             if (token) {
-                const user = decodeToken(token);
+                const user = (0, jwt_1.decodeToken)(token);
                 return { user };
             }
             return { user: null };
@@ -68,12 +67,3 @@ const bootstrapApp = () => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 bootstrapApp();
-const decodeToken = (token) => {
-    try {
-        const user = jsonwebtoken_1.default.verify(token, `${process.env.SECRET_KEY}`);
-        return user;
-    }
-    catch (err) {
-        throw new graphql_2.GraphQLError(err.message);
-    }
-};

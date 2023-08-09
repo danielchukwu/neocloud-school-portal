@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import Attendance from "../../models/Attendance";
 import Class from "../../models/Class";
 import ClassInstance from "../../models/ClassInstance";
@@ -13,18 +12,8 @@ import User from "../../models/User";
 import UsersClassesRoles from "../../models/UsersClassesRoles";
 import UsersFacultiesRoles from "../../models/UsersFacultiesRoles";
 import UsersRoles from "../../models/UsersRoles";
-import jwt from 'jsonwebtoken';
-import { UserInputError } from '@apollo/server/src/internalErrorClasses';
-
-
-const createJWT = async (user: any) => {
-  const role = await Role.findById(user.roleId);
-  return jwt.sign(
-    {role: role ? role.name : ''},
-    `${process.env.SECRET_KEY}`,
-    {algorithm: 'HS256', subject: `${user._id}`, expiresIn: '1h'}
-  )
-};
+// import { UserInputError } from '@apollo/server/src/internalErrorClasses';
+import { createJWT } from "../../jwt/jwt";
 
 const handleError = (err: any) => {
   console.log(typeof err);
