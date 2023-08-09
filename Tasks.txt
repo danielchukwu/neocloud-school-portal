@@ -1,2 +1,4 @@
-TASKS
-- Test out Mutation Endpoints
+TODOS
+
+- add avatar to class documents DONE
+- create rating for class and educator 
