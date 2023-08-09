@@ -15,10 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const server_1 = require("@apollo/server");
+const graphql_middleware_1 = require("graphql-middleware");
 const express4_1 = require("@apollo/server/express4");
 const graphql_1 = require("./graphql");
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const graphql_2 = require("graphql");
+const permissions_1 = __importDefault(require("./permissions"));
+const schema_1 = require("@graphql-tools/schema");
 // load env variables into process.env
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -27,8 +32,7 @@ const port = process.env.PORT || 8000;
 const bootstrapApp = () => __awaiter(void 0, void 0, void 0, function* () {
     // Create apollo server
     const server = new server_1.ApolloServer({
-        typeDefs: graphql_1.typeDefs,
-        resolvers: graphql_1.resolvers,
+        schema: (0, graphql_middleware_1.applyMiddleware)((0, schema_1.makeExecutableSchema)({ typeDefs: graphql_1.typeDefs, resolvers: graphql_1.resolvers }), permissions_1.default)
     });
     yield server.start();
     // middleware
@@ -36,7 +40,17 @@ const bootstrapApp = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use((0, cors_1.default)());
     app.use(express_1.default.json());
     app.use(express_1.default.urlencoded({ extended: true }));
-    app.use("/graphql", (0, express4_1.expressMiddleware)(server));
+    app.use("/graphql", (0, express4_1.expressMiddleware)(server, {
+        context: ({ req }) => __awaiter(void 0, void 0, void 0, function* () {
+            var _a;
+            const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+            if (token) {
+                const user = decodeToken(token);
+                return { user };
+            }
+            return { user: null };
+        }),
+    }));
     // listen
     const dbURI = process.env.DBURI || "";
     mongoose_1.default
@@ -54,17 +68,12 @@ const bootstrapApp = () => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 bootstrapApp();
-// User 🚀
-// Faculty 🚀
-// Classes 🚀
-// Attendance 
-// ClassInstance 🚀
-// ClassModule 🚀
-// ClassSchedule 🚀
-// Classwork 🚀
-// Notifications 
-// NotificationType 
-// Role 🚀
-// UsersClasses 
-// UsersFaculties 
-// UsersRoles 
+const decodeToken = (token) => {
+    try {
+        const user = jsonwebtoken_1.default.verify(token, `${process.env.SECRET_KEY}`);
+        return user;
+    }
+    catch (err) {
+        throw new graphql_2.GraphQLError(err.message);
+    }
+};
