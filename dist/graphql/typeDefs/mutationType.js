@@ -9,6 +9,9 @@ const mutationType = `#graphql
   ${input_1.default}
 
   type Mutation {
+    # Auth Entry Points
+    login(email: String, password: String): String!
+    signup(name: String, email: String, phone: String, password: String): String!
     # Attendance
     createAttendance(attendance: createAttendanceInput!): Attendance!
     updateAttendance(_id: ID!, attendance: updateAttendanceInput!): Attendance!
