@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import Attendance from "../../models/Attendance";
 import Class from "../../models/Class";
 import ClassInstance from "../../models/ClassInstance";
@@ -12,9 +13,51 @@ import User from "../../models/User";
 import UsersClassesRoles from "../../models/UsersClassesRoles";
 import UsersFacultiesRoles from "../../models/UsersFacultiesRoles";
 import UsersRoles from "../../models/UsersRoles";
+import jwt from 'jsonwebtoken';
+import { UserInputError } from '@apollo/server/src/internalErrorClasses';
+
+
+const createJWT = async (user: any) => {
+  const role = await Role.findById(user.roleId);
+  return jwt.sign(
+    {role: role ? role.name : ''},
+    `${process.env.SECRET_KEY}`,
+    {algorithm: 'HS256', subject: `${user._id}`, expiresIn: '1h'}
+  )
+};
+
+const handleError = (err: any) => {
+  console.log(typeof err);
+  console.log(err.statusCode);
+
+  return err;
+}
 
 const mutationResolvers = {
   Mutation: {
+    // # Auth Entry Points
+    login: async (_: any, args: {email: string, password: string}) => {
+      try {
+        const user = await User.login(args.email, args.password);
+        const token = await createJWT(user);
+        return token;
+      } catch (err: any) {
+        return err.message;
+      }
+    },
+    signup: async (_: any, args: {name: String, phone: String, email: String, password: String}) => {
+      try {
+        const user = await User.create(args);
+        const token = createJWT(user);
+        return token;
+      } catch (err: any) {
+        console.error(Object.keys(err));
+        console.log(Object.values(err));
+        // throw new UserInputError({name: '', message: {}})
+        return err.message;
+      }
+    },
+
     // # Attendance
     createAttendance: async (_: any, args: { attendance: {} }) => {
       const attendance = new Attendance(args.attendance);

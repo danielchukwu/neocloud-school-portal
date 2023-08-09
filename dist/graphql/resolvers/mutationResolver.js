@@ -26,8 +26,42 @@ const User_1 = __importDefault(require("../../models/User"));
 const UsersClassesRoles_1 = __importDefault(require("../../models/UsersClassesRoles"));
 const UsersFacultiesRoles_1 = __importDefault(require("../../models/UsersFacultiesRoles"));
 const UsersRoles_1 = __importDefault(require("../../models/UsersRoles"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const createJWT = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    const role = yield Role_1.default.findById(user.roleId);
+    return jsonwebtoken_1.default.sign({ role: role ? role.name : '' }, `${process.env.SECRET_KEY}`, { algorithm: 'HS256', subject: `${user._id}`, expiresIn: '1h' });
+});
+const handleError = (err) => {
+    console.log(typeof err);
+    console.log(err.statusCode);
+    return err;
+};
 const mutationResolvers = {
     Mutation: {
+        // # Auth Entry Points
+        login: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                const user = yield User_1.default.login(args.email, args.password);
+                const token = yield createJWT(user);
+                return token;
+            }
+            catch (err) {
+                return err.message;
+            }
+        }),
+        signup: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                const user = yield User_1.default.create(args);
+                const token = createJWT(user);
+                return token;
+            }
+            catch (err) {
+                console.error(Object.keys(err));
+                console.log(Object.values(err));
+                // throw new UserInputError({name: '', message: {}})
+                return err.message;
+            }
+        }),
         // # Attendance
         createAttendance: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
             const attendance = new Attendance_1.default(args.attendance);
