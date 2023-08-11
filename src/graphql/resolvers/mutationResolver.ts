@@ -12,14 +12,37 @@ import User from "../../models/User";
 import UsersClassesRoles from "../../models/UsersClassesRoles";
 import UsersFacultiesRoles from "../../models/UsersFacultiesRoles";
 import UsersRoles from "../../models/UsersRoles";
-// import { UserInputError } from '@apollo/server/src/internalErrorClasses';
 import { createJWT } from "../../jwt/jwt";
+import { GraphQLError } from "graphql";
 
 const handleError = (err: any) => {
-  console.log(typeof err);
-  console.log(err.statusCode);
+  let errors: Record<string, string> = {};
+  
+  // Unique errors
+  if (err.code === 11000){
+    errors.email = 'Email already exists!';
+    return errors;
+  }
 
-  return err;
+  // incorrect password
+  if (err.message.toLowerCase().includes('incorrect')){
+    errors.password = err.message;
+    return errors;
+  }
+  
+  // email doesn't exist
+  if (err.message.toLowerCase().includes("email doesn't exist")){
+    errors.email = err.message;
+    return errors;
+  }
+  
+  if (err.errors){
+    Object.values(err.errors).forEach((e: any) => {
+      errors[e.properties.path] = e.properties.message;
+    })
+  }
+  
+  return errors;
 }
 
 const mutationResolvers = {
@@ -31,7 +54,10 @@ const mutationResolvers = {
         const token = await createJWT(user);
         return token;
       } catch (err: any) {
-        return err.message;
+        console.log(err);
+        const errors = handleError(err);
+        return new GraphQLError('An error occured', {extensions: {errors}});
+        ;
       }
     },
     signup: async (_: any, args: {name: String, phone: String, email: String, password: String}) => {
@@ -40,10 +66,9 @@ const mutationResolvers = {
         const token = createJWT(user);
         return token;
       } catch (err: any) {
-        console.error(Object.keys(err));
-        console.log(Object.values(err));
-        // throw new UserInputError({name: '', message: {}})
-        return err.message;
+        const errors = handleError(err);
+        return new GraphQLError('An error occured', {extensions: {errors}});
+        ;
       }
     },
 
