@@ -26,12 +26,31 @@ const User_1 = __importDefault(require("../../models/User"));
 const UsersClassesRoles_1 = __importDefault(require("../../models/UsersClassesRoles"));
 const UsersFacultiesRoles_1 = __importDefault(require("../../models/UsersFacultiesRoles"));
 const UsersRoles_1 = __importDefault(require("../../models/UsersRoles"));
-// import { UserInputError } from '@apollo/server/src/internalErrorClasses';
 const jwt_1 = require("../../jwt/jwt");
+const graphql_1 = require("graphql");
 const handleError = (err) => {
-    console.log(typeof err);
-    console.log(err.statusCode);
-    return err;
+    let errors = {};
+    // Unique errors
+    if (err.code === 11000) {
+        errors.email = 'Email already exists!';
+        return errors;
+    }
+    // incorrect password
+    if (err.message.toLowerCase().includes('incorrect')) {
+        errors.password = err.message;
+        return errors;
+    }
+    // email doesn't exist
+    if (err.message.toLowerCase().includes("email doesn't exist")) {
+        errors.email = err.message;
+        return errors;
+    }
+    if (err.errors) {
+        Object.values(err.errors).forEach((e) => {
+            errors[e.properties.path] = e.properties.message;
+        });
+    }
+    return errors;
 };
 const mutationResolvers = {
     Mutation: {
@@ -43,7 +62,10 @@ const mutationResolvers = {
                 return token;
             }
             catch (err) {
-                return err.message;
+                console.log(err);
+                const errors = handleError(err);
+                return new graphql_1.GraphQLError('An error occured', { extensions: { errors } });
+                ;
             }
         }),
         signup: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
@@ -53,10 +75,9 @@ const mutationResolvers = {
                 return token;
             }
             catch (err) {
-                console.error(Object.keys(err));
-                console.log(Object.values(err));
-                // throw new UserInputError({name: '', message: {}})
-                return err.message;
+                const errors = handleError(err);
+                return new graphql_1.GraphQLError('An error occured', { extensions: { errors } });
+                ;
             }
         }),
         // # Attendance
