@@ -1,74 +1,60 @@
-import Attendance from "../../models/Attendance";
-import Class from "../../models/Class";
-import ClassInstance from "../../models/ClassInstance";
-import ClassModule from "../../models/ClassModule";
-import ClassSchedule from "../../models/ClassSchedule";
-import Classwork from "../../models/Classwork";
-import Faculty from "../../models/Faculty";
-import Notification from "../../models/Notification";
-import NotificationType from "../../models/NotificationType";
-import Role from "../../models/Role";
-import User from "../../models/User";
-import UsersClassesRoles from "../../models/UsersClassesRoles";
-import UsersFacultiesRoles from "../../models/UsersFacultiesRoles";
-import UsersRoles from "../../models/UsersRoles";
-import { createJWT } from "../../jwt/jwt";
+import {
+  Attendance,
+  Class,
+  ClassInstance,
+  ClassModule,
+  ClassSchedule,
+  Classwork,
+  Faculty,
+  Notification,
+  NotificationType,
+  Role,
+  User,
+  UsersClassesRoles,
+  UsersFacultiesRoles,
+  UsersRoles,
+} from '../../models';
 import { GraphQLError } from "graphql";
-
-const handleError = (err: any) => {
-  let errors: Record<string, string> = {};
-  
-  // Unique errors
-  if (err.code === 11000){
-    errors.email = 'Email already exists!';
-    return errors;
-  }
-
-  // incorrect password
-  if (err.message.toLowerCase().includes('incorrect')){
-    errors.password = err.message;
-    return errors;
-  }
-  
-  // email doesn't exist
-  if (err.message.toLowerCase().includes("email doesn't exist")){
-    errors.email = err.message;
-    return errors;
-  }
-  
-  if (err.errors){
-    Object.values(err.errors).forEach((e: any) => {
-      errors[e.properties.path] = e.properties.message;
-    })
-  }
-  
-  return errors;
-}
+import { handleError } from "../../utils/errorHandler";
+import { createAccessAndRefreshToken, decodeToken } from "../../jwt";
 
 const mutationResolvers = {
   Mutation: {
     // # Auth Entry Points
     login: async (_: any, args: {email: string, password: string}) => {
       try {
-        const user = await User.login(args.email, args.password);
-        const token = await createJWT(user);
-        return token;
+        const authData = await User.login(args.email, args.password);
+        return authData;
       } catch (err: any) {
         console.log(err);
         const errors = handleError(err);
-        return new GraphQLError('An error occured', {extensions: {errors}});
-        ;
+        return new GraphQLError('An error occurred', {extensions: {errors}});
       }
     },
-    signup: async (_: any, args: {name: String, phone: String, email: String, password: String}) => {
+    signup: async (_: any, args: {name: string, phone: string, email: string, password: string}) => {
       try {
-        const user = await User.create(args);
-        const token = createJWT(user);
-        return token;
+        await User.create(args);
+        const authData = await User.login(args.email, args.password);
+        return authData;
       } catch (err: any) {
+        console.log(err);
         const errors = handleError(err);
-        return new GraphQLError('An error occured', {extensions: {errors}});
-        ;
+        return new GraphQLError('An error occurred', {extensions: {errors}});
+      }
+    },
+    refreshToken: async (_: any, args: {refreshToken: string}, context: any) => {
+      try {
+        const payload = decodeToken(args.refreshToken);
+        console.log(payload);
+        if (payload) {
+          const user = await User.findById(payload.sub);
+          const {access_token, refresh_token} = await createAccessAndRefreshToken(user as any);
+          return {access_token, refresh_token, user};
+        }
+      } catch (err: any) {
+        console.log(err);
+        const errors = handleError(err);
+        return new GraphQLError('An error occurred', {extensions: {errors}});
       }
     },
 
