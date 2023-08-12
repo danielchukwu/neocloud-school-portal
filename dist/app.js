@@ -22,7 +22,7 @@ const graphql_middleware_1 = require("graphql-middleware");
 const express4_1 = require("@apollo/server/express4");
 const graphql_1 = require("./graphql");
 const schema_1 = require("@graphql-tools/schema");
-const jwt_1 = require("./jwt/jwt");
+const jwt_1 = require("./jwt");
 // load env variables into process.env
 dotenv_1.default.config();
 const app = (0, express_1.default)();

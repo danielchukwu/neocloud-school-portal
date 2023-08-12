@@ -8,7 +8,7 @@ import { applyMiddleware } from "graphql-middleware";
 import { expressMiddleware } from "@apollo/server/express4";
 import { typeDefs, resolvers } from "./graphql";
 import { makeExecutableSchema } from "@graphql-tools/schema"
-import { decodeToken } from "./jwt/jwt";
+import { decodeToken } from "./jwt";
 
 
 // load env variables into process.env
