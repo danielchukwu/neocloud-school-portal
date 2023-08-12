@@ -142,10 +142,10 @@ exports.typeDefs = `#graphql
     bio: String!
     phone: String
     password: String!
-    roleId: ID!
+    roleId: ID
     # below fields are not on model
     faculty: [UsersFacultiesRoles]!
-    role: Role!
+    role: Role
   }
   type UsersClassesRoles {
     _id: ID!
@@ -176,6 +176,14 @@ exports.typeDefs = `#graphql
     user: User!
     role: Role!
   }
+  
+  # -----------------
+  type AuthData {
+    access_token: String!
+    refresh_token: String!
+    user: User!
+  }
+  # -----------------
 
   # RootQuery
   ${queryType_1.default}
