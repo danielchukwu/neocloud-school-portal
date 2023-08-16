@@ -88,7 +88,7 @@ const nestedResolvers = {
     },
   },
   Notification: {
-    notificationType: async (parent: any) => await NotificationType.findById(parent.notificationTypeId),
+    type: async (parent: any) => await NotificationType.findById(parent.notificationTypeId),
     classwork: async (parent: any) => await Classwork.findById(parent.classworkId), 
     user: async (parent: any) => await User.findById(parent.userId),
     classInstance: async (parent: any) => await ClassInstance.findById(parent.classInstanceId),

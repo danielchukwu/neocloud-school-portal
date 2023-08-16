@@ -91,7 +91,7 @@ const nestedResolvers = {
         }),
     },
     Notification: {
-        notificationType: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield NotificationType_1.default.findById(parent.notificationTypeId); }),
+        type: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield NotificationType_1.default.findById(parent.notificationTypeId); }),
         classwork: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Classwork_1.default.findById(parent.classworkId); }),
         user: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(parent.userId); }),
         classInstance: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassInstance_1.default.findById(parent.classInstanceId); }),

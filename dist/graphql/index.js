@@ -119,7 +119,7 @@ exports.typeDefs = `#graphql
     classInstanceId: ID!
     facultyId: ID!
     # below fields are not on model
-    notificationType: NotificationType
+    type: NotificationType
     user: User
     classwork: Classwork!
     classInstance: ClassInstance!
@@ -146,6 +146,20 @@ exports.typeDefs = `#graphql
     # below fields are not on model
     faculty: [UsersFacultiesRoles]!
     role: Role
+    # TODO: implement fields
+    # # Educator
+    # class: Class
+    # student: Student
+    # classCount: Number
+    # studentsCount: Number
+    # completedClasses: Number
+    # # Student
+    # streak: Number
+    # completedClassworks: Number
+    # completedClasses: Number
+    # totalAttendance: Number
+    # longestStreak: Number
+    # bestGraduatingStudent: 
   }
   type UsersClassesRoles {
     _id: ID!
