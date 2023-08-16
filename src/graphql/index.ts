@@ -101,6 +101,7 @@ export const typeDefs = `#graphql
     body: String
     notificationTypeId: ID
     userId: ID
+    ownerId: ID
     classworkId: ID!
     classInstanceId: ID!
     facultyId: ID!
