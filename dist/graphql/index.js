@@ -230,7 +230,10 @@ exports.resolvers = Object.assign(Object.assign({ Query: {
         faculties: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _g; return yield Faculty_1.default.find({}).limit((_g = args.limit) !== null && _g !== void 0 ? _g : 100); }),
         faculty: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Faculty_1.default.findById(args._id); }),
         // Notification
-        notifications: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _h; return yield Notification_1.default.find({}).limit((_h = args.limit) !== null && _h !== void 0 ? _h : 100); }),
+        notifications: (_, args, context) => __awaiter(void 0, void 0, void 0, function* () {
+            var _h;
+            return yield Notification_1.default.find({ ownerId: context.user.sub }).limit((_h = args.limit) !== null && _h !== void 0 ? _h : 100);
+        }),
         notification: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Notification_1.default.findById(args._id); }),
         // NotificationType
         notificationTypes: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _j; return yield NotificationType_1.default.find({}).limit((_j = args.limit) !== null && _j !== void 0 ? _j : 100); }),

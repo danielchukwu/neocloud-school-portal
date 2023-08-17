@@ -16,6 +16,7 @@ import nestedQueryResolvers from "./resolvers/nestedResolvers";
 import mutationResolvers from "./resolvers/mutationResolver";
 import mutationType from "./typeDefs/mutationType";
 import queryType from "./typeDefs/queryType";
+import { DecodedTokenPayloadType } from "../types/model_types";
 
 export const typeDefs = `#graphql
   # Types 
@@ -220,7 +221,9 @@ export const resolvers = {
 
     faculty: async (_: any, args: { _id: String }) => await Faculty.findById(args._id),
     // Notification
-    notifications: async (_: any, args: {limit: number}) => await Notification.find({}).limit(args.limit ?? 100),
+    notifications: async (_: any, args: {limit: number}, context: DecodedTokenPayloadType) => {
+      return await Notification.find({ownerId: context.user.sub}).limit(args.limit ?? 100);
+    },
     notification: async (_: any, args: { _id: String }) => await Notification.findById(args._id),
     // NotificationType
     notificationTypes: async (_: any, args: {limit: number}) => await NotificationType.find({}).limit(args.limit ?? 100),
