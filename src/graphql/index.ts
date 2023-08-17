@@ -102,15 +102,15 @@ export const typeDefs = `#graphql
     notificationTypeId: ID
     userId: ID
     ownerId: ID
-    classworkId: ID!
-    classInstanceId: ID!
-    facultyId: ID!
+    classworkId: ID
+    classInstanceId: ID
+    facultyId: ID
     # below fields are not on model
     type: NotificationType
     user: User
-    classwork: Classwork!
-    classInstance: ClassInstance!
-    faculty: Faculty!
+    classwork: Classwork
+    classInstance: ClassInstance
+    faculty: Faculty
   }
   type NotificationType{
     _id: ID!
