@@ -226,7 +226,7 @@ export const resolvers = {
       // fetch users notifications
       const dataList = await Notification.find({ownerId: context.user.sub}).limit(args.limit ?? 100).sort({ seen: 1, createdAt: -1 });
       // update all unseen notifications to seen
-      Notification.updateMany({ownerId: context.user.sub, seen: false}, {seen: true})
+      await Notification.updateMany({ownerId: context.user.sub, seen: false}, {seen: true})
       return dataList;
     },
     notification: async (_: any, args: { _id: String }) => await Notification.findById(args._id),

@@ -233,7 +233,11 @@ exports.resolvers = Object.assign(Object.assign({ Query: {
         // Notification
         notifications: (_, args, context) => __awaiter(void 0, void 0, void 0, function* () {
             var _h;
-            return yield Notification_1.default.find({ ownerId: context.user.sub }).limit((_h = args.limit) !== null && _h !== void 0 ? _h : 100).sort({ createdAt: -1, seen: -1 });
+            // fetch users notifications
+            const dataList = yield Notification_1.default.find({ ownerId: context.user.sub }).limit((_h = args.limit) !== null && _h !== void 0 ? _h : 100).sort({ seen: 1, createdAt: -1 });
+            // update all unseen notifications to seen
+            yield Notification_1.default.updateMany({ ownerId: context.user.sub, seen: false }, { seen: true });
+            return dataList;
         }),
         notification: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Notification_1.default.findById(args._id); }),
         // NotificationType
