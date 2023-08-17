@@ -17,8 +17,10 @@ import {
 import { GraphQLError } from "graphql";
 import { handleError } from "../../utils/errorHandler";
 import { createAccessAndRefreshToken, decodeToken } from "../../jwt";
+import dateScalar from '../scalar/scalar';
 
 const mutationResolvers = {
+  Date: dateScalar,
   Mutation: {
     // # Auth Entry Points
     login: async (_: any, args: {email: string, password: string}) => {

@@ -8,12 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const models_1 = require("../../models");
 const graphql_1 = require("graphql");
 const errorHandler_1 = require("../../utils/errorHandler");
 const jwt_1 = require("../../jwt");
+const scalar_1 = __importDefault(require("../scalar/scalar"));
 const mutationResolvers = {
+    Date: scalar_1.default,
     Mutation: {
         // # Auth Entry Points
         login: (_, args) => __awaiter(void 0, void 0, void 0, function* () {

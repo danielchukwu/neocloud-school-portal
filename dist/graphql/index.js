@@ -32,6 +32,7 @@ const mutationResolver_1 = __importDefault(require("./resolvers/mutationResolver
 const mutationType_1 = __importDefault(require("./typeDefs/mutationType"));
 const queryType_1 = __importDefault(require("./typeDefs/queryType"));
 exports.typeDefs = `#graphql
+  scalar Date
   # Types 
   type Attendance {
     _id: ID!
@@ -120,6 +121,7 @@ exports.typeDefs = `#graphql
     classworkId: ID
     classInstanceId: ID
     facultyId: ID
+    createdAt: Date
     # below fields are not on model
     type: NotificationType
     user: User

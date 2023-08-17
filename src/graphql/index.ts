@@ -19,6 +19,7 @@ import queryType from "./typeDefs/queryType";
 import { DecodedTokenPayloadType } from "../types/model_types";
 
 export const typeDefs = `#graphql
+  scalar Date
   # Types 
   type Attendance {
     _id: ID!
@@ -107,6 +108,7 @@ export const typeDefs = `#graphql
     classworkId: ID
     classInstanceId: ID
     facultyId: ID
+    createdAt: Date
     # below fields are not on model
     type: NotificationType
     user: User
