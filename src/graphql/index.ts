@@ -100,6 +100,7 @@ export const typeDefs = `#graphql
   type Notification {
     _id: ID!
     body: String
+    seen: Boolean
     notificationTypeId: ID
     userId: ID
     ownerId: ID
@@ -222,11 +223,17 @@ export const resolvers = {
     faculty: async (_: any, args: { _id: String }) => await Faculty.findById(args._id),
     // Notification
     notifications: async (_: any, args: {limit: number}, context: DecodedTokenPayloadType) => {
-      return await Notification.find({ownerId: context.user.sub}).limit(args.limit ?? 100);
+      // fetch users notifications
+      const dataList = await Notification.find({ownerId: context.user.sub}).limit(args.limit ?? 100).sort({ seen: 1, createdAt: -1 });
+      // update all unseen notifications to seen
+      Notification.updateMany({ownerId: context.user.sub, seen: false}, {seen: true})
+      return dataList;
     },
     notification: async (_: any, args: { _id: String }) => await Notification.findById(args._id),
     // NotificationType
-    notificationTypes: async (_: any, args: {limit: number}) => await NotificationType.find({}).limit(args.limit ?? 100),
+    notificationTypes: async (_: any, args: {limit: number}) => {
+      return await NotificationType.find({}).limit(args.limit ?? 100);
+    },
     notificationType: async (_: any, args: { _id: String }) => await NotificationType.findById(args._id),
     // Role
     roles: async (_: any, args: {limit: number}) => await Role.find({}).limit(args.limit ?? 100),

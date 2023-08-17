@@ -8,6 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const NotificationSchema = new mongoose_1.default.Schema({
     body: { type: String, required: true, trim: true, maxLength: 200 },
     notificationTypeId: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true, maxLength: 50 },
+    seen: { type: Boolean, default: false, required: true },
     userId: { type: mongoose_1.default.Types.ObjectId, ref: 'User', maxLength: 50 },
     ownerId: { type: mongoose_1.default.Types.ObjectId, ref: 'User', maxLength: 50 },
     classworkId: { type: mongoose_1.default.Types.ObjectId, ref: 'Classwork', maxLength: 50 },

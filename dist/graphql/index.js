@@ -113,6 +113,7 @@ exports.typeDefs = `#graphql
   type Notification {
     _id: ID!
     body: String
+    seen: Boolean
     notificationTypeId: ID
     userId: ID
     ownerId: ID
@@ -232,11 +233,14 @@ exports.resolvers = Object.assign(Object.assign({ Query: {
         // Notification
         notifications: (_, args, context) => __awaiter(void 0, void 0, void 0, function* () {
             var _h;
-            return yield Notification_1.default.find({ ownerId: context.user.sub }).limit((_h = args.limit) !== null && _h !== void 0 ? _h : 100);
+            return yield Notification_1.default.find({ ownerId: context.user.sub }).limit((_h = args.limit) !== null && _h !== void 0 ? _h : 100).sort({ createdAt: -1, seen: -1 });
         }),
         notification: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Notification_1.default.findById(args._id); }),
         // NotificationType
-        notificationTypes: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _j; return yield NotificationType_1.default.find({}).limit((_j = args.limit) !== null && _j !== void 0 ? _j : 100); }),
+        notificationTypes: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
+            var _j;
+            return yield NotificationType_1.default.find({}).limit((_j = args.limit) !== null && _j !== void 0 ? _j : 100);
+        }),
         notificationType: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield NotificationType_1.default.findById(args._id); }),
         // Role
         roles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _k; return yield Role_1.default.find({}).limit((_k = args.limit) !== null && _k !== void 0 ? _k : 100); }),
