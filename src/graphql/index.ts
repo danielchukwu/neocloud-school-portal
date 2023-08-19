@@ -17,6 +17,7 @@ import mutationResolvers from "./resolvers/mutationResolver";
 import mutationType from "./typeDefs/mutationType";
 import queryType from "./typeDefs/queryType";
 import { DecodedTokenPayloadType } from "../types/model_types";
+import ClassInstancesModulesSchedules from "../models/ClassInstancesModulesSchedules";
 
 export const typeDefs = `#graphql
   scalar Date
@@ -49,6 +50,18 @@ export const typeDefs = `#graphql
     # below fields are not on model
     educator: User!
     class: Class!
+  }
+  type ClassInstancesModulesSchedules {
+    _id: ID!
+    classInstanceId: ID!
+    classModuleId: ID!
+    classScheduleId: ID!
+    startTime: Date!
+    endTime: Date!
+    # below fields are not on model
+    classInstance: ClassInstance!
+    classModule: ClassModule!
+    classSchedule: ClassSchedule!
   }
   type ClassModule {
     _id: ID!
@@ -210,6 +223,9 @@ export const resolvers = {
     // ClassInstance
     classInstances: async (_: any, args: {limit: number}) => await ClassInstance.find({}).limit(args.limit ?? 100),
     classInstance: async (_: any, args: { _id: String }) => await ClassInstance.findById(args._id),
+    // ClassInstancesModulesSchedules
+    ClassInstancesModulesSchedules: async (_: any, args: {limit: number}) => await ClassInstancesModulesSchedules.find({}).limit(args.limit ?? 100),
+    ClassInstanceModuleSchedule: async (_: any, args: {_id: String}) => await ClassInstancesModulesSchedules.findById(args._id),
     // ClassModule
     classModules: async (_: any, args: {limit: number, classId: String}) => await ClassModule.find(args.classId ? {classId: args.classId} : {}).limit(args.limit ?? 100),
     classModule: async (_: any, args: { _id: String }) => await ClassModule.findById(args._id),
