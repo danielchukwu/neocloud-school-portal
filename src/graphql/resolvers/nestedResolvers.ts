@@ -36,6 +36,11 @@ const nestedResolvers = {
     class: async (parent: any) => await Class.findById(parent.classId),
     educator: async (parent: any) => await User.findById(parent.educatorId),
   },
+  ClassInstancesModulesSchedules: {
+    classInstance: async (parent: any) => await ClassInstance.findById(parent.classInstanceId),
+    classModule: async (parent: any) => await ClassModule.findById(parent.classModuleId),
+    classSchedule: async (parent: any) => await ClassSchedule.findById(parent.classScheduleId),
+  },
   ClassModule: {
     class: async (parent: any) => await Class.findById(parent.classId),
     classSchedules: async (parent: any) => await ClassSchedule.find({classModuleId: parent._id}),
