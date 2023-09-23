@@ -39,6 +39,7 @@ export const typeDefs = `#graphql
     about: String!
     facultyId: ID!
     # below fields are not on model
+    modules: [ClassModule]
     faculty: Faculty!
     educators: [User!]!
   }

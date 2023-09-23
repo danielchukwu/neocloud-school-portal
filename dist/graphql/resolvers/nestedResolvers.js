@@ -30,13 +30,15 @@ const nestedResolvers = {
         classSchedule: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassSchedule_1.default.findById(parent.classScheduleId); }),
     },
     Class: {
+        modules: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassModule_1.default.find({ classId: parent._id }); }),
         faculty: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Faculty_1.default.findById(parent.facultyId); }),
         educators: (parent) => __awaiter(void 0, void 0, void 0, function* () {
             const role = yield Role_1.default.findOne({ name: 'Educator' });
             const usersClassRolesList = yield UsersClassesRoles_1.default.find({ roleId: role === null || role === void 0 ? void 0 : role._id, classId: parent._id });
             const educators = [];
             yield Promise.all(usersClassRolesList.map((item) => __awaiter(void 0, void 0, void 0, function* () {
-                educators.push(yield User_1.default.findById(item.userId));
+                const educator = yield User_1.default.findById(item.userId);
+                educators.push(educator);
             })));
             return educators;
         }),
@@ -44,6 +46,11 @@ const nestedResolvers = {
     ClassInstance: {
         class: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(parent.classId); }),
         educator: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(parent.educatorId); }),
+    },
+    ClassInstancesModulesSchedules: {
+        classInstance: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassInstance_1.default.findById(parent.classInstanceId); }),
+        classModule: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassModule_1.default.findById(parent.classModuleId); }),
+        classSchedule: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassSchedule_1.default.findById(parent.classScheduleId); }),
     },
     ClassModule: {
         class: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(parent.classId); }),

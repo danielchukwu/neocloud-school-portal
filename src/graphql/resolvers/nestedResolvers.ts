@@ -18,6 +18,7 @@ const nestedResolvers = {
     classSchedule: async (parent: any) => await ClassSchedule.findById(parent.classScheduleId),
   },
   Class: {
+    modules: async (parent: any) => await ClassModule.find({classId: parent._id}),
     faculty: async (parent: any) => await Faculty.findById(parent.facultyId),
     educators: async (parent: any) => {
       const role = await Role.findOne({name: 'Educator'});
@@ -26,7 +27,8 @@ const nestedResolvers = {
       const educators: any[] = [];
 
       await Promise.all(usersClassRolesList.map(async(item) => {
-        educators.push(await User.findById(item.userId));
+        const educator = await User.findById(item.userId);
+        educators.push(educator);
       }));
 
       return educators;
