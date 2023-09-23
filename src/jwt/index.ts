@@ -25,8 +25,8 @@ export const decodeToken = (token: string) => {
 }
 
 export const createAccessAndRefreshToken = async (user: UserType): Promise<{ access_token: string; refresh_token: string; }>  => {
-  const access_token = await createJWT(user, '10s');  // 10seconds
-  const refresh_token = await createJWT(user, '60d');
+  const access_token = await createJWT(user, '1h');  // 1h
+  const refresh_token = await createJWT(user, '360d');
 
   return { access_token, refresh_token };
 }

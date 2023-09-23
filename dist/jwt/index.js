@@ -35,8 +35,8 @@ const decodeToken = (token) => {
 };
 exports.decodeToken = decodeToken;
 const createAccessAndRefreshToken = (user) => __awaiter(void 0, void 0, void 0, function* () {
-    const access_token = yield (0, exports.createJWT)(user, '10s'); // 10seconds
-    const refresh_token = yield (0, exports.createJWT)(user, '60d');
+    const access_token = yield (0, exports.createJWT)(user, '1h'); // 1h
+    const refresh_token = yield (0, exports.createJWT)(user, '360d');
     return { access_token, refresh_token };
 });
 exports.createAccessAndRefreshToken = createAccessAndRefreshToken;
