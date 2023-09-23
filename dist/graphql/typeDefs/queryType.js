@@ -11,6 +11,9 @@ exports.default = `#graphql
     # ClassInstance
     classInstances(limit: Int): [ClassInstance]!
     classInstance(_id: ID!): ClassInstance
+    # ClassInstancesModulesSchedules
+    ClassInstancesModulesSchedules(limit: Int): [ClassInstancesModulesSchedules]!
+    ClassInstanceModuleSchedule(_id: ID!): ClassInstancesModulesSchedules!
     # ClassModule
     classModules(limit: Int, classId: ID): [ClassModule]!
     classModule(_id: ID!): ClassModule
