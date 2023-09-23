@@ -6,7 +6,7 @@ import { UserType } from "../types/model_types";
 
 
 const UserSchema = new mongoose.Schema<UserType>({
-  name: { type: String, required: [true, 'Name field is required'], trim: true, maxLength: [30, 'Name must be less than 30 characters'], validate: [validator.isAlpha, 'Enter a valid name'] },
+  name: { type: String, required: [true, 'Name field is required'], trim: true, maxLength: [30, 'Name must be less than 30 characters'], validate: [(name: string) => validator.isAlpha(name.replace(/\s+/g, '')), 'Enter a valid name'] },
   email: { type: String, required: [true, 'Email field is required'], trim: true, maxLength: [50, 'Email must be less than 50 characters'], unique: true, validate: [validator.isEmail, 'Enter a valid email'] },
   avatar: { type: String, trim: true, maxLength: [200, 'Avatar string must be less than 200 characters'] },
   cover: { type: String, trim: true, maxLength: [200, 'Cover string must be less than 50 characters'] },
