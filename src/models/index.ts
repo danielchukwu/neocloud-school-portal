@@ -12,11 +12,13 @@ import User from "../models/User";
 import UsersClassesRoles from "../models/UsersClassesRoles";
 import UsersFacultiesRoles from "../models/UsersFacultiesRoles";
 import UsersRoles from "../models/UsersRoles";
+import ClassInstancesModulesSchedules from "./ClassInstancesModulesSchedules";
 
-export {
+export default {
   Attendance,
   Class,
   ClassInstance,
+  ClassInstancesModulesSchedules,
   ClassModule,
   ClassSchedule,
   Classwork,
