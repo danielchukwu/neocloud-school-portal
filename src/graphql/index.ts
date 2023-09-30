@@ -1,23 +1,8 @@
-import Attendance from "../models/Attendance";
-import Class from "../models/Class";
-import ClassInstance from "../models/ClassInstance";
-import ClassModule from "../models/ClassModule";
-import ClassSchedule from "../models/ClassSchedule";
-import Classwork from "../models/Classwork";
-import Faculty from "../models/Faculty";
-import Notification from "../models/Notification";
-import NotificationType from "../models/NotificationType";
-import Role from "../models/Role";
-import User from "../models/User";
-import UsersClassesRoles from "../models/UsersClassesRoles";
-import UsersFacultiesRoles from "../models/UsersFacultiesRoles";
-import UsersRoles from "../models/UsersRoles";
 import nestedQueryResolvers from "./resolvers/nestedResolvers";
 import mutationResolvers from "./resolvers/mutationResolver";
 import mutationType from "./typeDefs/mutationType";
 import queryType from "./typeDefs/queryType";
-import { DecodedTokenPayloadType } from "../types/model_types";
-import ClassInstancesModulesSchedules from "../models/ClassInstancesModulesSchedules";
+import controllers from "./controllers/index";
 
 export const typeDefs = `#graphql
   scalar Date
@@ -212,66 +197,72 @@ export const typeDefs = `#graphql
 `;
 
 
-// (){} : ! # _ => ""
 export const resolvers = {
   Query: {
-    // Attendance
-    attendances: async (_: any, args: {limit: number}) => await Attendance.find({}).limit(args.limit ?? 100),
-    attendance: async (_: any, args: { _id: String }) => await Attendance.findById(args._id),
-    // Class
-    classes: async (_: any, args: {limit: number, name: string}) => await Class.find(args.name ? {name:  new RegExp(args.name, 'i')} : {}).limit(args.limit ?? 100),
-    class: async (_: any, args: { _id: String }) => await Class.findById(args._id),
-    // ClassInstance
-    classInstances: async (_: any, args: {limit: number}) => await ClassInstance.find({}).limit(args.limit ?? 100),
-    classInstance: async (_: any, args: { _id: String }) => await ClassInstance.findById(args._id),
-    // ClassInstancesModulesSchedules
-    ClassInstancesModulesSchedules: async (_: any, args: {limit: number}) => await ClassInstancesModulesSchedules.find({}).limit(args.limit ?? 100),
-    ClassInstanceModuleSchedule: async (_: any, args: {_id: String}) => await ClassInstancesModulesSchedules.findById(args._id),
-    // ClassModule
-    classModules: async (_: any, args: {limit: number, classId: String}) => await ClassModule.find(args.classId ? {classId: args.classId} : {}).limit(args.limit ?? 100),
-    classModule: async (_: any, args: { _id: String }) => await ClassModule.findById(args._id),
-    // ClassSchedule
-    classSchedules: async (_: any, args: {limit: number}) => await ClassSchedule.find({}).limit(args.limit ?? 100),
-    classSchedule: async (_: any, args: { _id: String }) => await ClassSchedule.findById(args._id),
-    // Classwork
-    classworks: async (_: any, args: {limit: number}) => await Classwork.find({}).limit(args.limit ?? 100),
-    classwork: async (_: any, args: { _id: String }) => await Classwork.findById(args._id),
-    // Faculty
-    faculties: async (_: any, args: {limit: number}) => await Faculty.find({}).limit(args.limit ?? 100),
 
-    faculty: async (_: any, args: { _id: String }) => await Faculty.findById(args._id),
+    // Attendance
+    attendances: controllers.get_attendances,
+    attendance: controllers.get_attendance,
+
+    // Class
+    classes: controllers.get_classes,
+    class: controllers.get_class,
+
+    // ClassInstance
+    classInstances: controllers.get_class_instances,
+    classInstance: controllers.get_class_instance,
+
+    // ClassInstancesModulesSchedules
+    ClassInstancesModulesSchedules: controllers.get_class_instances_modules_schedules,
+    ClassInstanceModuleSchedule: controllers.get_class_instance_module_schedule,
+
+    // ClassModule
+    classModules: controllers.get_class_modules,
+    classModule: controllers.get_class_module,
+
+    // ClassSchedule
+    classSchedules: controllers.get_class_schedules,
+    classSchedule: controllers.get_class_schedule,
+
+    // Classwork
+    classworks: controllers.get_classworks,
+    classwork: controllers.get_classwork,
+
+    // Faculty
+    faculties: controllers.get_faculties,
+    faculty: controllers.get_faculty,
+
     // Notification
-    notifications: async (_: any, args: {limit: number}, context: DecodedTokenPayloadType) => {
-      // fetch users notifications
-      const dataList = await Notification.find({ownerId: context.user.sub}).limit(args.limit ?? 100).sort({ seen: 1, createdAt: -1 });
-      // update all unseen notifications to seen
-      await Notification.updateMany({ownerId: context.user.sub, seen: false}, {seen: true})
-      return dataList;
-    },
-    notification: async (_: any, args: { _id: String }) => await Notification.findById(args._id),
+    notifications: controllers.get_notifications,
+    notification: controllers.get_notification,
+
     // NotificationType
-    notificationTypes: async (_: any, args: {limit: number}) => {
-      return await NotificationType.find({}).limit(args.limit ?? 100);
-    },
-    notificationType: async (_: any, args: { _id: String }) => await NotificationType.findById(args._id),
+    notificationTypes: controllers.get_notification_types,
+    notificationType: controllers.get_notification_type,
+
     // Role
-    roles: async (_: any, args: {limit: number}) => await Role.find({}).limit(args.limit ?? 100),
-    role: async (_: any, args: { _id: String }) => await Role.findById(args._id),
+    roles: controllers.get_roles,
+    role: controllers.get_role,
+
     // User
-    users: async (_: any, args: {limit: number, name: string}) => await User.find(args.name ? {name:  new RegExp(args.name, 'i')} : {}).limit(args.limit ?? 100),
-    user: async (_: any, args: { _id: String }) => await User.findById(args._id),
+    users: controllers.get_users,
+    user: controllers.get_user,
+
     // UsersClassesRoles
-    usersClassesRoles: async (_: any, args: {limit: number}) => await UsersClassesRoles.find({}).limit(args.limit ?? 100),
-    userClassRole: async (_: any, args: { _id: String }) => await UsersClassesRoles.findById(args._id),
+    usersClassesRoles: controllers.get_users_classes_roles,
+    userClassRole: controllers.get_user_class_role,
+
     // UsersFacultiesRoles
-    usersFacultiesRoles: async (_: any, args: {limit: number}) => await UsersFacultiesRoles.find({}).limit(args.limit ?? 100),
-    userFacultyRole: async (_: any, args: { _id: String }) => await UsersFacultiesRoles.findById(args._id),
+    usersFacultiesRoles: controllers.get_users_faculties_roles,
+    userFacultyRole: controllers.get_user_faculty_role,
+
     // UsersRoles
-    usersRoles: async (_: any, args: {limit: number}) => await UsersRoles.find({}).limit(args.limit ?? 100),
-    userRole: async (_: any, args: { _id: String }) => await UsersRoles.findById(args._id),
+    usersRoles: controllers.get_users_roles,
+    userRole: controllers.get_user_role,
   },
   
   ...nestedQueryResolvers,
 
   ...mutationResolvers,
 };
+

@@ -1,37 +1,14 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = exports.typeDefs = void 0;
-const Attendance_1 = __importDefault(require("../models/Attendance"));
-const Class_1 = __importDefault(require("../models/Class"));
-const ClassInstance_1 = __importDefault(require("../models/ClassInstance"));
-const ClassModule_1 = __importDefault(require("../models/ClassModule"));
-const ClassSchedule_1 = __importDefault(require("../models/ClassSchedule"));
-const Classwork_1 = __importDefault(require("../models/Classwork"));
-const Faculty_1 = __importDefault(require("../models/Faculty"));
-const Notification_1 = __importDefault(require("../models/Notification"));
-const NotificationType_1 = __importDefault(require("../models/NotificationType"));
-const Role_1 = __importDefault(require("../models/Role"));
-const User_1 = __importDefault(require("../models/User"));
-const UsersClassesRoles_1 = __importDefault(require("../models/UsersClassesRoles"));
-const UsersFacultiesRoles_1 = __importDefault(require("../models/UsersFacultiesRoles"));
-const UsersRoles_1 = __importDefault(require("../models/UsersRoles"));
 const nestedResolvers_1 = __importDefault(require("./resolvers/nestedResolvers"));
 const mutationResolver_1 = __importDefault(require("./resolvers/mutationResolver"));
 const mutationType_1 = __importDefault(require("./typeDefs/mutationType"));
 const queryType_1 = __importDefault(require("./typeDefs/queryType"));
-const ClassInstancesModulesSchedules_1 = __importDefault(require("../models/ClassInstancesModulesSchedules"));
+const index_1 = __importDefault(require("./controllers/index"));
 exports.typeDefs = `#graphql
   scalar Date
   # Types 
@@ -223,61 +200,50 @@ exports.typeDefs = `#graphql
   # type Mutation
   ${mutationType_1.default}
 `;
-// (){} : ! # _ => ""
 exports.resolvers = Object.assign(Object.assign({ Query: {
         // Attendance
-        attendances: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _a; return yield Attendance_1.default.find({}).limit((_a = args.limit) !== null && _a !== void 0 ? _a : 100); }),
-        attendance: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Attendance_1.default.findById(args._id); }),
+        attendances: index_1.default.get_attendances,
+        attendance: index_1.default.get_attendance,
         // Class
-        classes: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _b; return yield Class_1.default.find(args.name ? { name: new RegExp(args.name, 'i') } : {}).limit((_b = args.limit) !== null && _b !== void 0 ? _b : 100); }),
-        class: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Class_1.default.findById(args._id); }),
+        classes: index_1.default.get_classes,
+        class: index_1.default.get_class,
         // ClassInstance
-        classInstances: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _c; return yield ClassInstance_1.default.find({}).limit((_c = args.limit) !== null && _c !== void 0 ? _c : 100); }),
-        classInstance: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassInstance_1.default.findById(args._id); }),
+        classInstances: index_1.default.get_class_instances,
+        classInstance: index_1.default.get_class_instance,
         // ClassInstancesModulesSchedules
-        ClassInstancesModulesSchedules: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _d; return yield ClassInstancesModulesSchedules_1.default.find({}).limit((_d = args.limit) !== null && _d !== void 0 ? _d : 100); }),
-        ClassInstanceModuleSchedule: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassInstancesModulesSchedules_1.default.findById(args._id); }),
+        ClassInstancesModulesSchedules: index_1.default.get_class_instances_modules_schedules,
+        ClassInstanceModuleSchedule: index_1.default.get_class_instance_module_schedule,
         // ClassModule
-        classModules: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _e; return yield ClassModule_1.default.find(args.classId ? { classId: args.classId } : {}).limit((_e = args.limit) !== null && _e !== void 0 ? _e : 100); }),
-        classModule: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassModule_1.default.findById(args._id); }),
+        classModules: index_1.default.get_class_modules,
+        classModule: index_1.default.get_class_module,
         // ClassSchedule
-        classSchedules: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _f; return yield ClassSchedule_1.default.find({}).limit((_f = args.limit) !== null && _f !== void 0 ? _f : 100); }),
-        classSchedule: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield ClassSchedule_1.default.findById(args._id); }),
+        classSchedules: index_1.default.get_class_schedules,
+        classSchedule: index_1.default.get_class_schedule,
         // Classwork
-        classworks: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _g; return yield Classwork_1.default.find({}).limit((_g = args.limit) !== null && _g !== void 0 ? _g : 100); }),
-        classwork: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Classwork_1.default.findById(args._id); }),
+        classworks: index_1.default.get_classworks,
+        classwork: index_1.default.get_classwork,
         // Faculty
-        faculties: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _h; return yield Faculty_1.default.find({}).limit((_h = args.limit) !== null && _h !== void 0 ? _h : 100); }),
-        faculty: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Faculty_1.default.findById(args._id); }),
+        faculties: index_1.default.get_faculties,
+        faculty: index_1.default.get_faculty,
         // Notification
-        notifications: (_, args, context) => __awaiter(void 0, void 0, void 0, function* () {
-            var _j;
-            // fetch users notifications
-            const dataList = yield Notification_1.default.find({ ownerId: context.user.sub }).limit((_j = args.limit) !== null && _j !== void 0 ? _j : 100).sort({ seen: 1, createdAt: -1 });
-            // update all unseen notifications to seen
-            yield Notification_1.default.updateMany({ ownerId: context.user.sub, seen: false }, { seen: true });
-            return dataList;
-        }),
-        notification: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Notification_1.default.findById(args._id); }),
+        notifications: index_1.default.get_notifications,
+        notification: index_1.default.get_notification,
         // NotificationType
-        notificationTypes: (_, args) => __awaiter(void 0, void 0, void 0, function* () {
-            var _k;
-            return yield NotificationType_1.default.find({}).limit((_k = args.limit) !== null && _k !== void 0 ? _k : 100);
-        }),
-        notificationType: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield NotificationType_1.default.findById(args._id); }),
+        notificationTypes: index_1.default.get_notification_types,
+        notificationType: index_1.default.get_notification_type,
         // Role
-        roles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _l; return yield Role_1.default.find({}).limit((_l = args.limit) !== null && _l !== void 0 ? _l : 100); }),
-        role: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield Role_1.default.findById(args._id); }),
+        roles: index_1.default.get_roles,
+        role: index_1.default.get_role,
         // User
-        users: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _m; return yield User_1.default.find(args.name ? { name: new RegExp(args.name, 'i') } : {}).limit((_m = args.limit) !== null && _m !== void 0 ? _m : 100); }),
-        user: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield User_1.default.findById(args._id); }),
+        users: index_1.default.get_users,
+        user: index_1.default.get_user,
         // UsersClassesRoles
-        usersClassesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _o; return yield UsersClassesRoles_1.default.find({}).limit((_o = args.limit) !== null && _o !== void 0 ? _o : 100); }),
-        userClassRole: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersClassesRoles_1.default.findById(args._id); }),
+        usersClassesRoles: index_1.default.get_users_classes_roles,
+        userClassRole: index_1.default.get_user_class_role,
         // UsersFacultiesRoles
-        usersFacultiesRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _p; return yield UsersFacultiesRoles_1.default.find({}).limit((_p = args.limit) !== null && _p !== void 0 ? _p : 100); }),
-        userFacultyRole: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersFacultiesRoles_1.default.findById(args._id); }),
+        usersFacultiesRoles: index_1.default.get_users_faculties_roles,
+        userFacultyRole: index_1.default.get_user_faculty_role,
         // UsersRoles
-        usersRoles: (_, args) => __awaiter(void 0, void 0, void 0, function* () { var _q; return yield UsersRoles_1.default.find({}).limit((_q = args.limit) !== null && _q !== void 0 ? _q : 100); }),
-        userRole: (_, args) => __awaiter(void 0, void 0, void 0, function* () { return yield UsersRoles_1.default.findById(args._id); }),
+        usersRoles: index_1.default.get_users_roles,
+        userRole: index_1.default.get_user_role,
     } }, nestedResolvers_1.default), mutationResolver_1.default);
