@@ -1,49 +1,49 @@
 export default `#graphql
   type Query {
     # Attendance
-    attendances(limit: Int): [Attendance]!
+    attendances(page: Int): [Attendance]!
     attendance(_id: ID!): Attendance
     # Class
-    classes(limit: Int, name: String): [Class]!
+    classes(page: Int, name: String): [Class]!
     class(_id: ID!): Class
     # ClassInstance
-    classInstances(limit: Int): [ClassInstance]!
+    classInstances(page: Int): [ClassInstance]!
     classInstance(_id: ID!): ClassInstance
     # ClassInstancesModulesSchedules
-    ClassInstancesModulesSchedules(limit: Int): [ClassInstancesModulesSchedules]!
+    ClassInstancesModulesSchedules(page: Int): [ClassInstancesModulesSchedules]!
     ClassInstanceModuleSchedule(_id: ID!): ClassInstancesModulesSchedules!
     # ClassModule
-    classModules(limit: Int, classId: ID): [ClassModule]!
+    classModules(page: Int, classId: ID): [ClassModule]!
     classModule(_id: ID!): ClassModule
     # ClassSchedule
-    classSchedules(limit: Int): [ClassSchedule]!
+    classSchedules(page: Int): [ClassSchedule]!
     classSchedule(_id: ID!): ClassSchedule
     # Classwork's
-    classworks(limit: Int): [Classwork]!
+    classworks(page: Int): [Classwork]!
     classwork(_id: ID!): Classwork
     # Faculty
-    faculties(limit: Int): [Faculty]!
+    faculties(page: Int): [Faculty]!
     faculty(_id: ID!): Faculty
     # Notification
-    notifications(limit: Int): [Notification]!
+    notifications(page: Int): [Notification]!
     notification(_id: ID!): Notification
     # NotificationType
-    notificationTypes(limit: Int): [NotificationType]!
+    notificationTypes(page: Int): [NotificationType]!
     notificationType(_id: ID!): NotificationType
     # Role
-    roles(limit: Int): [Role]!
+    roles(page: Int): [Role]!
     role(_id: ID!): Role
     # User
-    users(limit: Int, name: String): [User]!
+    users(page: Int, name: String): [User]!
     user(_id: ID!): User
     # UsersClassesRoles
-    usersClassesRoles(limit: Int): [UsersClassesRoles]!
+    usersClassesRoles(page: Int): [UsersClassesRoles]!
     userClassRole(_id: ID!): UsersClassesRoles
     # UsersFacultiesRoles
-    usersFacultiesRoles(limit: Int): [UsersFacultiesRoles]!
+    usersFacultiesRoles(page: Int): [UsersFacultiesRoles]!
     userFacultyRole(_id: ID!): UsersFacultiesRoles
     # UsersRoles
-    usersRoles(limit: Int): [UsersRoles]!
+    usersRoles(page: Int): [UsersRoles]!
     userRole(_id: ID!): UsersRoles
   }
 `
